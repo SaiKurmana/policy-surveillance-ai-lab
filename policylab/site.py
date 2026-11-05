@@ -17,6 +17,7 @@ from . import paths
 from .codebook import load_codebook
 
 REPO_URL = "https://github.com/saikurmana/policy-surveillance-ai-lab"
+APP_URL = "https://policy-ai-lab.streamlit.app/"
 DISCLAIMER = (
     "Independent portfolio project. Not affiliated with, endorsed by, or produced for the CDC or "
     "any government agency. Uses only public-domain documents. AI outputs require human review."
@@ -133,6 +134,7 @@ def build(out: Path = paths.SITE_OUT) -> Path:
         (paths.SITE_SRC / "index.template.html").read_text(),
         {
             "repo_url": REPO_URL,
+            "app_url": APP_URL,
             "disclaimer": DISCLAIMER,
             "n_docs": str(len(manifest)),
             "n_chunks": f"{n_chunks:,}",
@@ -157,7 +159,12 @@ def build(out: Path = paths.SITE_OUT) -> Path:
         title = next((ln[2:].strip() for ln in md_text.splitlines() if ln.startswith("# ")), name)
         page = _fill(
             doc_t,
-            {"title": html.escape(title), "body": _md_to_html(md_text), "disclaimer": DISCLAIMER},
+            {
+                "title": html.escape(title),
+                "body": _md_to_html(md_text),
+                "disclaimer": DISCLAIMER,
+                "app_url": APP_URL,
+            },
         )
         (out / "docs" / f"{name}.html").write_text(page)
     (out / ".nojekyll").write_text("")
