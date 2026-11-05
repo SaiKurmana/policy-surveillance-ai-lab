@@ -1,0 +1,158 @@
+[
+  {
+    "topic": "school_meals",
+    "label": "School meal nutrition standards",
+    "query": "\"school lunch\" | \"school breakfast\" | \"child nutrition programs\"",
+    "types": [
+      "RULE",
+      "PRORULE",
+      "NOTICE"
+    ],
+    "count": 1466,
+    "curated": 9,
+    "curated_found_by_query": 9,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "school_food_environment",
+    "label": "Competitive foods and school wellness policies",
+    "query": "\"Smart Snacks\" | \"local school wellness\" | \"all foods sold in school\"",
+    "types": [
+      "RULE",
+      "PRORULE"
+    ],
+    "count": 36,
+    "curated": 3,
+    "curated_found_by_query": 3,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "child_care_nutrition",
+    "label": "Child care (CACFP) meal patterns",
+    "query": "\"Child and Adult Care Food Program\" \"meal pattern\"",
+    "types": [
+      "RULE",
+      "PRORULE"
+    ],
+    "count": 63,
+    "curated": 3,
+    "curated_found_by_query": 3,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "wic_food_packages",
+    "label": "WIC food packages",
+    "query": "\"WIC food packages\"",
+    "types": [
+      "RULE",
+      "PRORULE"
+    ],
+    "count": 31,
+    "curated": 4,
+    "curated_found_by_query": 4,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "menu_vending_labeling",
+    "label": "Menu and vending calorie labeling",
+    "query": "\"menu labeling\" | \"calorie labeling\" | \"vending machines\"",
+    "types": [
+      "RULE",
+      "PRORULE"
+    ],
+    "count": 317,
+    "curated": 5,
+    "curated_found_by_query": 5,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "package_labeling_claims",
+    "label": "Nutrition Facts, front-of-package, and \"healthy\" claims",
+    "query": "\"Nutrition Facts\" | \"front-of-package\" | \"nutrient content claims\"",
+    "types": [
+      "RULE",
+      "PRORULE"
+    ],
+    "count": 306,
+    "curated": 6,
+    "curated_found_by_query": 6,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "sodium_reformulation",
+    "label": "Sodium reduction and food reformulation",
+    "query": "\"sodium reduction\" | \"salt substitutes\" | \"ultra-processed\"",
+    "types": [
+      "RULE",
+      "PRORULE",
+      "NOTICE"
+    ],
+    "count": 63,
+    "curated": 6,
+    "curated_found_by_query": 6,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "snap_retail_incentives",
+    "label": "SNAP food environment, incentives, and nutrition education",
+    "query": "\"Supplemental Nutrition Assistance Program\" (demonstration | incentives | \"SNAP-Ed\")",
+    "types": [
+      "NOTICE"
+    ],
+    "count": 141,
+    "curated": 4,
+    "curated_found_by_query": 4,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "dietary_guidelines",
+    "label": "Dietary Guidelines for Americans process",
+    "query": "\"Dietary Guidelines Advisory Committee\" | \"Dietary Guidelines for Americans\"",
+    "types": [
+      "NOTICE"
+    ],
+    "count": 236,
+    "curated": 3,
+    "curated_found_by_query": 3,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "physical_activity",
+    "label": "Physical activity guidelines and youth sports",
+    "query": "\"Physical Activity Guidelines\" | \"youth sports\" | \"Sports, Fitness\"",
+    "types": [
+      "NOTICE",
+      "PRESDOCU"
+    ],
+    "count": 161,
+    "curated": 9,
+    "curated_found_by_query": 9,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "active_transportation",
+    "label": "Active transportation (walking and bicycling)",
+    "query": "\"active transportation\" | pedestrian | bicycle",
+    "types": [
+      "RULE",
+      "PRORULE",
+      "NOTICE"
+    ],
+    "count": 4785,
+    "curated": 5,
+    "curated_found_by_query": 5,
+    "run_date": "2026-11-05"
+  },
+  {
+    "topic": "chronic_disease_prevention",
+    "label": "Obesity and chronic disease prevention programs",
+    "query": "obesity | \"Racial and Ethnic Approaches to Community Health\" | \"Healthy People 2030\"",
+    "types": [
+      "NOTICE"
+    ],
+    "count": 1561,
+    "curated": 4,
+    "curated_found_by_query": 4,
+    "run_date": "2026-11-05"
+  }
+]

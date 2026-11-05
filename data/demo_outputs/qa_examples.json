@@ -1,0 +1,122 @@
+{
+  "note": "Generated 2026-11-05 by `python -m policylab.demo` using the offline extractive baseline (NOT an LLM). Answers are copied sentences from the cited chunks; they are examples of the output format and verification, not model-quality results.",
+  "provider": "offline-baseline",
+  "model": "extractive-keyword-baseline-v1",
+  "is_live_llm": false,
+  "examples": [
+    {
+      "question": "What added sugars limits apply to breakfast cereals and yogurt in school meals?",
+      "docs": [
+        "2024-08098"
+      ],
+      "insufficient_evidence": false,
+      "missing_information": "",
+      "sentences": [
+        {
+          "text": "For consistency across child nutrition programs, USDA also proposed to apply the product-based added sugars limits to breakfast cereals and yogurt served in the CACFP; under the proposed rule, the added sugars limits would replace the current total sugars limits for breakfast cereals and yogurt in CACFP.",
+          "citations": [
+            "2024-08098:p0097-0098"
+          ],
+          "status": "supported"
+        },
+        {
+          "text": "An advocacy group asserted that making major changes to CACFP nutrition requirements to “streamline” work for schools is “a mistake” and recommended USDA further engage the CACFP community prior to finalizing the proposed breakfast cereal and yogurt added sugars limits in CACFP.",
+          "citations": [
+            "2024-08098:p0112-0112"
+          ],
+          "status": "supported"
+        },
+        {
+          "text": "A State agency suggested applying the current CACFP total sugars limits for breakfast cereals and yogurt to school meals, instead of finalizing the proposed changes.",
+          "citations": [
+            "2024-08098:p0112-0112"
+          ],
+          "status": "supported"
+        }
+      ],
+      "citation_precision": 1.0
+    },
+    {
+      "question": "Which restaurants must post calorie information on menus?",
+      "docs": [
+        "2014-27833"
+      ],
+      "insufficient_evidence": false,
+      "missing_information": "",
+      "sentences": [
+        {
+          "text": "Another comment similarly asserted that covered establishments must post the required information on the menu used most often rather than on all menus.",
+          "citations": [
+            "2014-27833:p0151-0151"
+          ],
+          "status": "supported"
+        },
+        {
+          "text": "Further, section 4205 of the ACA and this rule require covered establishments to post, on menus and menu boards, a succinct statement concerning suggested daily caloric intake designed to enable consumers to understand, in the context of a total daily diet, the significance of the calorie information provided on menus and menu boards.",
+          "citations": [
+            "2014-27833:p0063-0063"
+          ],
+          "status": "supported"
+        },
+        {
+          "text": "Further, as required by sections 403(q)(5)(H)(ii)(III) and (IV) of the FD&C Act, a covered establishment must also provide, in a written form and upon consumer request, additional nutrition information, and post on the menu or menu board a prominent, clear, and conspicuous statement regarding the availability of this additional nutrition information.",
+          "citations": [
+            "2014-27833:p0346-0346"
+          ],
+          "status": "supported"
+        }
+      ],
+      "citation_precision": 1.0
+    },
+    {
+      "question": "What did the State of Ohio request in its SNAP demonstration project?",
+      "docs": [
+        "2026-18897"
+      ],
+      "insufficient_evidence": false,
+      "missing_information": "",
+      "sentences": [
+        {
+          "text": "Further information related to the implementation of the demonstration project is included on the FNA website (https://www.fna.usda.gov/snap/waivers/foodrestriction) and the State's website (https://jfs.ohio.gov/public-assistance/food-assistance/food-programs/what-is-snap/resources-for-snap-retailers).",
+          "citations": [
+            "2026-18897:p0012-0017"
+          ],
+          "status": "supported"
+        },
+        {
+          "text": "State of Ohio Demonstration Project Request",
+          "citations": [
+            "2026-18897:p0012-0017"
+          ],
+          "status": "supported"
+        },
+        {
+          "text": "The State of Ohio requested to conduct a demonstration project to amend the SNAP definition of food for purchase to exclude “sugar- sweetened beverages”.",
+          "citations": [
+            "2026-18897:p0012-0017"
+          ],
+          "status": "supported"
+        }
+      ],
+      "citation_precision": 1.0
+    },
+    {
+      "question": "What is the maximum grant amount for active transportation projects in Canada?",
+      "docs": [
+        "2024-08758"
+      ],
+      "insufficient_evidence": false,
+      "missing_information": "",
+      "sentences": [
+        {
+          "text": "The purpose of ATIIP is to provide discretionary grants to eligible entities to plan, design, and construct eligible projects that provide safe and connected active transportation infrastructure in an active transportation network or active transportation spine (BIL sec. 11529(a)).",
+          "citations": [
+            "2024-08758:p0010-0014"
+          ],
+          "status": "supported"
+        }
+      ],
+      "citation_precision": 1.0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+# large / regenerable artifacts
+data/raw/
+data/index/
+data/*.duckdb
+data/*.duckdb.wal
+_site/
+.streamlit/secrets.toml
+*.egg-info/
+.DS_Store

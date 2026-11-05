@@ -1,0 +1,721 @@
+{
+  "generated_at": "2026-11-05T05:31:36+00:00",
+  "provider": {
+    "name": "offline-baseline",
+    "model": "extractive-keyword-baseline-v1",
+    "is_live_llm": false,
+    "label": "Offline baseline (keyword/extractive, not an LLM)"
+  },
+  "prompt_versions": {
+    "coding": "coding_v1",
+    "qa": "qa_v1"
+  },
+  "codebook_version": "1.0.0",
+  "corpus": {
+    "documents": 61,
+    "chunks": 5094
+  },
+  "gold": {
+    "tier": "draft_unverified",
+    "n_cells_used": 213,
+    "n_documents_total": 20,
+    "status_counts": {
+      "draft_unverified": 213,
+      "todo": 7
+    }
+  },
+  "coding": {
+    "per_variable": {
+      "policy_domain": {
+        "label": "Policy domain",
+        "type": "single",
+        "n_gold": 20,
+        "n_ai_coded": 20,
+        "abstention_rate": 0.0,
+        "accuracy": 0.9,
+        "accuracy_when_coded": 0.9,
+        "kappa": 0.7122302158273383,
+        "kappa_kind": "Cohen's kappa"
+      },
+      "populations": {
+        "label": "Population(s) targeted",
+        "type": "multi",
+        "n_gold": 20,
+        "n_ai_coded": 14,
+        "abstention_rate": 0.30000000000000004,
+        "accuracy": 0.2,
+        "accuracy_when_coded": 0.2857142857142857,
+        "mean_jaccard": 0.6333333333333334,
+        "kappa": 0.6371490545865991,
+        "kappa_kind": "mean per-label binary kappa"
+      },
+      "settings": {
+        "label": "Setting(s)",
+        "type": "multi",
+        "n_gold": 20,
+        "n_ai_coded": 16,
+        "abstention_rate": 0.19999999999999996,
+        "accuracy": 0.15,
+        "accuracy_when_coded": 0.1875,
+        "mean_jaccard": 0.5041666666666667,
+        "kappa": 0.45709014648249296,
+        "kappa_kind": "mean per-label binary kappa"
+      },
+      "mechanisms": {
+        "label": "Policy mechanism(s)",
+        "type": "multi",
+        "n_gold": 20,
+        "n_ai_coded": 18,
+        "abstention_rate": 0.09999999999999998,
+        "accuracy": 0.15,
+        "accuracy_when_coded": 0.16666666666666666,
+        "mean_jaccard": 0.40476190476190477,
+        "kappa": 0.4782260867107868,
+        "kappa_kind": "mean per-label binary kappa"
+      },
+      "legal_force": {
+        "label": "Mandatory vs. voluntary",
+        "type": "single",
+        "n_gold": 19,
+        "n_ai_coded": 19,
+        "abstention_rate": 0.0,
+        "accuracy": 0.3157894736842105,
+        "accuracy_when_coded": 0.3157894736842105,
+        "kappa": 0.09191176470588232,
+        "kappa_kind": "Cohen's kappa"
+      },
+      "regulatory_stage": {
+        "label": "Regulatory stage / document type",
+        "type": "single",
+        "n_gold": 20,
+        "n_ai_coded": 20,
+        "abstention_rate": 0.0,
+        "accuracy": 0.8,
+        "accuracy_when_coded": 0.8,
+        "kappa": 0.7411003236245955,
+        "kappa_kind": "Cohen's kappa"
+      },
+      "effective_date": {
+        "label": "Effective date",
+        "type": "date",
+        "n_gold": 20,
+        "n_ai_coded": 20,
+        "abstention_rate": 0.0,
+        "accuracy": 1.0,
+        "accuracy_when_coded": 1.0,
+        "kappa": null,
+        "kappa_kind": "n/a (dates: exact-match accuracy only)"
+      },
+      "nutrients_targeted": {
+        "label": "Nutrients or food components targeted",
+        "type": "multi",
+        "n_gold": 18,
+        "n_ai_coded": 18,
+        "abstention_rate": 0.0,
+        "accuracy": 0.3888888888888889,
+        "accuracy_when_coded": 0.3888888888888889,
+        "mean_jaccard": 0.6478835978835978,
+        "kappa": 0.5072030296425672,
+        "kappa_kind": "mean per-label binary kappa"
+      },
+      "equity_provisions": {
+        "label": "Equity provisions mentioned",
+        "type": "single",
+        "n_gold": 20,
+        "n_ai_coded": 20,
+        "abstention_rate": 0.0,
+        "accuracy": 0.6,
+        "accuracy_when_coded": 0.6,
+        "kappa": 0.2233009708737864,
+        "kappa_kind": "Cohen's kappa"
+      },
+      "evaluation_reporting": {
+        "label": "Evaluation or reporting requirement",
+        "type": "single",
+        "n_gold": 16,
+        "n_ai_coded": 16,
+        "abstention_rate": 0.0,
+        "accuracy": 0.625,
+        "accuracy_when_coded": 0.625,
+        "kappa": 0.29411764705882354,
+        "kappa_kind": "Cohen's kappa"
+      },
+      "public_comment": {
+        "label": "Public comment opportunity",
+        "type": "single",
+        "n_gold": 20,
+        "n_ai_coded": 20,
+        "abstention_rate": 0.0,
+        "accuracy": 0.85,
+        "accuracy_when_coded": 0.85,
+        "kappa": 0.7,
+        "kappa_kind": "Cohen's kappa"
+      }
+    },
+    "n_gold_cells": 213,
+    "n_documents": 20,
+    "macro_accuracy": 0.5436071238702818,
+    "macro_kappa": 0.4842329239512872,
+    "quote_verification_rate": 1.0
+  },
+  "coding_runs": [
+    {
+      "doc": "2014-27834",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2016-09412",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2016-17227",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2016-17230",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2022-02327",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2023-27450",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-07437",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-08098",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-08758",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-08899",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-25567",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-29100",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-29957",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2024-30710",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2025-00778",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2025-15011",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2026-09212",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2026-12700",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2026-18897",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    },
+    {
+      "doc": "2026-20833",
+      "problems": [],
+      "served_model": "extractive-keyword-baseline-v1"
+    }
+  ],
+  "qa": {
+    "n_questions": 18,
+    "abstention_rate": 0.3333333333333333,
+    "correct_abstention_rate": 1.0,
+    "false_abstention_rate": 0.0,
+    "key_fact_accuracy": 0.5,
+    "citation_precision": 1.0,
+    "mean_answer_citation_precision": 1.0,
+    "per_question": [
+      {
+        "id": "q01",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": true
+      },
+      {
+        "id": "q02",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": false
+      },
+      {
+        "id": "q03",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": false
+      },
+      {
+        "id": "q04",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": false
+      },
+      {
+        "id": "q05",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": false
+      },
+      {
+        "id": "q06",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": true
+      },
+      {
+        "id": "q07",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 1,
+        "flagged_sentences": 0,
+        "key_facts_present": false
+      },
+      {
+        "id": "q08",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": false
+      },
+      {
+        "id": "q09",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": true
+      },
+      {
+        "id": "q10",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 3,
+        "flagged_sentences": 0,
+        "key_facts_present": true
+      },
+      {
+        "id": "q11",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 2,
+        "flagged_sentences": 0,
+        "key_facts_present": true
+      },
+      {
+        "id": "q12",
+        "answerable": true,
+        "abstained": false,
+        "citation_precision": 1.0,
+        "n_citations": 1,
+        "flagged_sentences": 0,
+        "key_facts_present": true
+      },
+      {
+        "id": "q13",
+        "answerable": false,
+        "abstained": true,
+        "citation_precision": null,
+        "n_citations": 0,
+        "flagged_sentences": 0
+      },
+      {
+        "id": "q14",
+        "answerable": false,
+        "abstained": true,
+        "citation_precision": null,
+        "n_citations": 0,
+        "flagged_sentences": 0
+      },
+      {
+        "id": "q15",
+        "answerable": false,
+        "abstained": true,
+        "citation_precision": null,
+        "n_citations": 0,
+        "flagged_sentences": 0
+      },
+      {
+        "id": "q16",
+        "answerable": false,
+        "abstained": true,
+        "citation_precision": null,
+        "n_citations": 0,
+        "flagged_sentences": 0
+      },
+      {
+        "id": "q17",
+        "answerable": false,
+        "abstained": true,
+        "citation_precision": null,
+        "n_citations": 0,
+        "flagged_sentences": 0
+      },
+      {
+        "id": "q18",
+        "answerable": false,
+        "abstained": true,
+        "citation_precision": null,
+        "n_citations": 0,
+        "flagged_sentences": 0
+      }
+    ],
+    "questions_status": "draft_unverified"
+  },
+  "retrieval": {
+    "primary": {
+      "mode": "hybrid",
+      "n_pairs": 25,
+      "recall_at_k": {
+        "1": 0.56,
+        "3": 0.72,
+        "5": 0.8,
+        "10": 0.8
+      },
+      "mrr_at_10": 0.6513333333333332,
+      "per_pair": [
+        {
+          "id": "r01",
+          "n_relevant": 8,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r02",
+          "n_relevant": 9,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r03",
+          "n_relevant": 8,
+          "first_relevant_rank": 3
+        },
+        {
+          "id": "r04",
+          "n_relevant": 30,
+          "first_relevant_rank": 2
+        },
+        {
+          "id": "r05",
+          "n_relevant": 3,
+          "first_relevant_rank": 2
+        },
+        {
+          "id": "r06",
+          "n_relevant": 2,
+          "first_relevant_rank": 4
+        },
+        {
+          "id": "r07",
+          "n_relevant": 1,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r08",
+          "n_relevant": 29,
+          "first_relevant_rank": 5
+        },
+        {
+          "id": "r09",
+          "n_relevant": 1,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r10",
+          "n_relevant": 7,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r11",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r12",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r13",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r14",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r15",
+          "n_relevant": 17,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r16",
+          "n_relevant": 3,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r17",
+          "n_relevant": 1,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r18",
+          "n_relevant": 13,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r19",
+          "n_relevant": 5,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r20",
+          "n_relevant": 73,
+          "first_relevant_rank": 2
+        },
+        {
+          "id": "r21",
+          "n_relevant": 12,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r22",
+          "n_relevant": 3,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r23",
+          "n_relevant": 21,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r24",
+          "n_relevant": 1,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r25",
+          "n_relevant": 4,
+          "first_relevant_rank": 1
+        }
+      ]
+    },
+    "pairs_status": "draft_unverified",
+    "bm25_only": {
+      "mode": "bm25",
+      "n_pairs": 25,
+      "recall_at_k": {
+        "1": 0.56,
+        "3": 0.8,
+        "5": 0.8,
+        "10": 0.84
+      },
+      "mrr_at_10": 0.6783333333333335,
+      "per_pair": [
+        {
+          "id": "r01",
+          "n_relevant": 8,
+          "first_relevant_rank": 2
+        },
+        {
+          "id": "r02",
+          "n_relevant": 9,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r03",
+          "n_relevant": 8,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r04",
+          "n_relevant": 30,
+          "first_relevant_rank": 2
+        },
+        {
+          "id": "r05",
+          "n_relevant": 3,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r06",
+          "n_relevant": 2,
+          "first_relevant_rank": 2
+        },
+        {
+          "id": "r07",
+          "n_relevant": 1,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r08",
+          "n_relevant": 29,
+          "first_relevant_rank": 2
+        },
+        {
+          "id": "r09",
+          "n_relevant": 1,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r10",
+          "n_relevant": 7,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r11",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r12",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r13",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r14",
+          "n_relevant": 1,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r15",
+          "n_relevant": 17,
+          "first_relevant_rank": 3
+        },
+        {
+          "id": "r16",
+          "n_relevant": 3,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r17",
+          "n_relevant": 1,
+          "first_relevant_rank": 8
+        },
+        {
+          "id": "r18",
+          "n_relevant": 13,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r19",
+          "n_relevant": 5,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r20",
+          "n_relevant": 73,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r21",
+          "n_relevant": 12,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r22",
+          "n_relevant": 3,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r23",
+          "n_relevant": 21,
+          "first_relevant_rank": 1
+        },
+        {
+          "id": "r24",
+          "n_relevant": 1,
+          "first_relevant_rank": null
+        },
+        {
+          "id": "r25",
+          "n_relevant": 4,
+          "first_relevant_rank": 2
+        }
+      ]
+    }
+  },
+  "time_saved": {
+    "status": "placeholder - not measured",
+    "manual_minutes_per_document": null,
+    "review_minutes_per_document": null,
+    "estimate": null,
+    "how_to_measure": "Time manual coding of the gold documents; log review time in the app (seconds_spent is stored per review decision); fill eval/time_assumptions.yaml."
+  },
+  "charts": [
+    "coding_agreement.png",
+    "retrieval_recall.png"
+  ]
+}

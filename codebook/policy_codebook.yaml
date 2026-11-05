@@ -1,0 +1,254 @@
+# Policy Surveillance AI Lab - policy codebook
+#
+# A codebook is the contract between human coders and the AI. Each variable has
+# a definition, allowed values, decision rules, and an evidence requirement.
+# The same file drives (1) the LLM prompt, (2) pydantic validation of AI output,
+# (3) the review UI, and (4) the evaluation. Change `version` whenever a
+# definition or allowed value changes; codes made under different versions are
+# not directly comparable.
+#
+# `cues` are plain-language phrases that often signal a value. They help human
+# coders and power the offline keyword baseline used in demo mode and in CI.
+# They are NOT decision rules: a cue appearing in a document does not by itself
+# justify a code.
+
+version: "1.0.0"
+name: Nutrition, physical activity, and obesity prevention policy codebook
+unit_of_analysis: One Federal Register document (as published).
+general_rules:
+  - Code only what the document itself states. Do not use outside knowledge about later amendments, litigation, or implementation.
+  - Every code must cite the chunk ID that contains the supporting quote, and the quote must be copied exactly from that chunk.
+  - If the document does not provide enough evidence, return status "insufficient_evidence" instead of guessing.
+  - Multi-select variables list every value that applies to the main provisions of the document, not passing mentions.
+  - Preambles summarize comments from the public. Code what the agency adopts or proposes, not what commenters requested.
+
+variables:
+  - id: policy_domain
+    label: Policy domain
+    type: single
+    definition: The primary public health domain the document's provisions address.
+    values:
+      nutrition: Food, beverages, meals, nutrients, food labeling, or food assistance nutrition.
+      physical_activity: Physical activity, sport, fitness, or active transportation (walking/bicycling).
+      obesity_prevention_general: Explicitly framed around obesity or chronic disease prevention across domains.
+      multiple: Substantive provisions in more than one of the above domains.
+      other: None of the above (e.g., purely administrative or environmental review).
+    decision_rules:
+      - Choose "multiple" only when the document has operative provisions in two domains, not just background mentions.
+      - Active transportation infrastructure counts as physical_activity.
+    cues:
+      nutrition: [nutrition, meal pattern, food package, sodium, labeling, menu, nutrient]
+      physical_activity: [physical activity, bicycle, pedestrian, youth sports, fitness, walking]
+      obesity_prevention_general: [obesity, chronic disease prevention]
+    retrieval_query: purpose of this rule summary nutrition physical activity obesity
+
+  - id: populations
+    label: Population(s) targeted
+    type: multi
+    definition: Groups whose health behaviors or environments the provisions are intended to affect.
+    values:
+      infants_toddlers: Infants and children under 2 (or under 24 months).
+      young_children: Children ages 2-5 or preschool children.
+      school_age_children: School-age children and adolescents (K-12).
+      adults: Adults in general.
+      older_adults: Older adults (65+), including in adult care.
+      pregnant_postpartum: Pregnant, postpartum, or breastfeeding people.
+      low_income: Low-income individuals or households, or program-eligible participants.
+      tribal_communities: American Indian / Alaska Native communities or Tribal governments.
+      racial_ethnic_minority_groups: Racial and ethnic minority groups named as a focus.
+      general_population: The general public or all consumers.
+    decision_rules:
+      - Food assistance program participants (WIC, SNAP, school meals) are coded low_income in addition to age groups.
+      - Food labeling aimed at all consumers is general_population.
+    cues:
+      infants_toddlers: [infant, toddler, "12 through 23 months"]
+      young_children: [preschool, "ages 1-5", "children 2 through 4", "young children"]
+      school_age_children: [students, "grades K", school-age, adolescents, "high school"]
+      older_adults: [older adults, adult day care, elderly]
+      pregnant_postpartum: [pregnant, postpartum, breastfeeding]
+      low_income: [low-income, eligible households, free and reduced price, participants]
+      tribal_communities: [Tribal, Indian Tribal Organization, American Indian]
+      racial_ethnic_minority_groups: [racial and ethnic, minority groups]
+      general_population: [consumers, general public, all Americans]
+    retrieval_query: who is affected participants consumers children adults population
+
+  - id: settings
+    label: Setting(s)
+    type: multi
+    definition: Places or institutions where the provisions apply.
+    values:
+      schools: K-12 schools (meals, competitive foods, wellness policies).
+      child_care: Child care centers, family day care homes, Head Start, CACFP sites.
+      retail_food_stores: Grocery and food retail stores, including SNAP/WIC authorized retailers.
+      restaurants_food_service: Restaurants, similar retail food establishments, vending machines.
+      worksite: Employers and worksites.
+      community_built_environment: Streets, sidewalks, trails, parks, transportation systems.
+      packaged_food_supply: Packaged foods sold anywhere (manufacturer labeling, reformulation).
+      food_assistance_programs: Program administration (State agencies, benefit design) not tied to one setting above.
+      healthcare: Clinics or health care settings.
+      other: Other settings.
+    decision_rules:
+      - WIC food package rules are food_assistance_programs plus retail_food_stores if vendor/retailer requirements change.
+      - Nutrition Facts or front-of-package labeling is packaged_food_supply.
+    cues:
+      schools: [school food authority, school lunch, school breakfast, schools]
+      child_care: [child care, day care, CACFP, Head Start]
+      retail_food_stores: [retailer, grocery, vendor, retail food store]
+      restaurants_food_service: [restaurant, menu, vending machine, similar retail food establishment]
+      worksite: [worksite, employer]
+      community_built_environment: [pedestrian, bicycle, sidewalk, trail, roadway, park]
+      packaged_food_supply: [packaged food, manufacturer, label, reformulation, commercially processed]
+      food_assistance_programs: [State agency, State agencies, program operators, benefit]
+    retrieval_query: applies to schools child care retailers restaurants manufacturers state agencies setting
+
+  - id: mechanisms
+    label: Policy mechanism(s)
+    type: multi
+    definition: How the document seeks to change behavior or environments.
+    values:
+      nutrition_standard: Binding or proposed nutrition or meal-pattern standards.
+      labeling_disclosure: Required or voluntary labeling, disclosure, or nutrient claims.
+      funding_grants: Grants, awards, or funding availability.
+      incentive: Financial or non-financial incentives (e.g., produce incentives, prizes, recognition).
+      education_promotion: Education, campaigns, guidance for the public, recognition programs.
+      data_collection_reporting: Information collection, surveillance, recordkeeping, or reporting.
+      infrastructure_design: Physical design or infrastructure standards.
+      procurement: Purchasing or procurement rules (e.g., Buy American, geographic preference).
+      voluntary_target_guidance: Voluntary targets or industry guidance.
+      advisory_process: Advisory committees, guideline development, requests for comments or nominations.
+    decision_rules:
+      - Code the mechanism of the document itself. An information collection notice about an education program is data_collection_reporting, not education_promotion, unless the notice itself sets education requirements.
+    cues:
+      nutrition_standard: [meal pattern, nutrition standards, limit, must contain, weekly requirements]
+      labeling_disclosure: [label, labeling, disclose, declaration, claim]
+      funding_grants: [funding, grant, award, notice of funding opportunity]
+      incentive: [incentive, prize, award, champion]
+      education_promotion: [education, campaign, outreach, promote]
+      data_collection_reporting: [information collection, reporting, recordkeeping, data collection]
+      infrastructure_design: [infrastructure, design, sidewalk, crosswalk, traffic control]
+      procurement: [procurement, Buy American, geographic preference]
+      voluntary_target_guidance: [voluntary, guidance for industry, targets, goals]
+      advisory_process: [advisory committee, nominations, solicitation of written comments]
+    retrieval_query: requires establishes standards labeling funding incentive guidance information collection
+
+  - id: legal_force
+    label: Mandatory vs. voluntary
+    type: single
+    definition: Whether the main provisions are legally binding on the regulated parties.
+    values:
+      mandatory: Binding requirements (final rule or proposed binding requirements).
+      voluntary: Voluntary targets, guidance, recognition programs, or invitations.
+      mixed: Both binding and voluntary provisions of comparable importance.
+      not_applicable: No operative provisions (e.g., meeting notice, comment request, information collection).
+    decision_rules:
+      - Proposed rules that would impose requirements are coded mandatory (the proposal's intended force).
+      - FDA guidance documents are voluntary even when they describe how to meet a requirement.
+    cues:
+      mandatory: [must, shall, required, requirements]
+      voluntary: [voluntary, guidance, not binding, nonbinding, recommendations]
+    retrieval_query: required must shall voluntary guidance binding
+
+  - id: regulatory_stage
+    label: Regulatory stage / document type
+    type: single
+    definition: The document's stage in the federal policy process.
+    values:
+      final_rule: Final rule.
+      proposed_rule: Proposed rule or advance notice of proposed rulemaking.
+      interim_or_direct_final: Interim final rule or direct final rule.
+      correction_or_technical: Correction, technical amendment, delay of effective/compliance date, or extension of comment period.
+      guidance_availability: Notice announcing availability of guidance.
+      funding_notice: Notice of funding availability or award program.
+      information_collection: Paperwork Reduction Act information collection notice.
+      meeting_or_comment_request: Meeting announcement, request for comments, information, or nominations.
+      presidential_document: Executive order, proclamation, or other presidential document.
+      other: Anything else.
+    decision_rules:
+      - Use the document's ACTION line first; corrections and date extensions take precedence over the underlying type.
+    cues:
+      final_rule: ["ACTION: Final rule"]
+      proposed_rule: ["ACTION: Proposed rule"]
+      correction_or_technical: [correction, technical amendment, extension of comment period, delay]
+      guidance_availability: [notice of availability, guidance for industry]
+      information_collection: [information collection, Paperwork Reduction Act]
+      meeting_or_comment_request: [request for comments, request for information, meeting, nominations]
+      presidential_document: [executive order, proclamation, by the president]
+    retrieval_query: ACTION final rule proposed rule notice
+
+  - id: effective_date
+    label: Effective date
+    type: date
+    definition: The date the document's provisions take effect, as stated in the DATES section (YYYY-MM-DD), or "not_stated".
+    values: {}
+    decision_rules:
+      - Use the effective date, not compliance or implementation dates (those vary by provision).
+      - Notices and proposed rules usually have no effective date - code "not_stated".
+    cues: {}
+    retrieval_query: DATES effective date this rule is effective
+
+  - id: nutrients_targeted
+    label: Nutrients or food components targeted
+    type: multi
+    definition: Specific nutrients or food groups the provisions set limits, minimums, or disclosures for.
+    values:
+      sodium: Sodium or salt.
+      added_sugars: Added sugars (or total sugars limits).
+      saturated_fat: Saturated fat.
+      trans_fat: Trans fat.
+      calories: Calories / energy.
+      whole_grains: Whole grains.
+      fruits_vegetables: Fruits and/or vegetables.
+      milk_dairy: Milk, yogurt, cheese, or dairy.
+      other_nutrients: Other specific nutrients (e.g., vitamin D, protein, fiber).
+      none: No specific nutrient provisions (e.g., physical activity documents).
+    decision_rules:
+      - Code "none" alone for documents with no nutrient-specific provisions.
+    cues:
+      sodium: [sodium, salt]
+      added_sugars: [added sugars]
+      saturated_fat: [saturated fat]
+      trans_fat: [trans fat]
+      calories: [calorie, calories]
+      whole_grains: [whole grain]
+      fruits_vegetables: [fruit, vegetable]
+      milk_dairy: [milk, yogurt, cheese, dairy]
+      other_nutrients: [vitamin D, fiber, protein]
+    retrieval_query: limits sodium added sugars saturated fat calories whole grains milk fruits vegetables
+
+  - id: equity_provisions
+    label: Equity provisions mentioned
+    type: single
+    definition: Whether the document explicitly addresses health equity, disparities, underserved or disadvantaged communities, or cultural/religious/accessibility accommodations as part of its provisions or rationale.
+    values:
+      "yes": Explicit equity, disparity, underserved-community, or cultural/religious accommodation language tied to the provisions.
+      "no": No such language beyond boilerplate.
+    decision_rules:
+      - Boilerplate civil rights impact analysis alone does not count as "yes" unless it identifies specific equity effects.
+    cues:
+      "yes": [equity, disparities, underserved, cultural, religious, disadvantaged, Tribal, food insecurity]
+    retrieval_query: health equity disparities underserved communities cultural religious accommodations
+
+  - id: evaluation_reporting
+    label: Evaluation or reporting requirement
+    type: single
+    definition: Whether the document requires (or proposes to require) monitoring, evaluation, assessment, or reporting by implementers or the agency.
+    values:
+      "yes": Requires reporting, monitoring, assessment, or evaluation (including information collection requirements).
+      "no": No such requirement.
+    decision_rules:
+      - A Paperwork Reduction Act burden estimate for new recordkeeping counts as "yes".
+    cues:
+      "yes": [report, reporting, recordkeeping, evaluation, assessment, monitor]
+    retrieval_query: reporting requirements recordkeeping evaluation assessment monitoring
+
+  - id: public_comment
+    label: Public comment opportunity
+    type: single
+    definition: Whether the document invites public comments, information, or nominations with a deadline or docket.
+    values:
+      "yes": Invites comments, information, or nominations.
+      "no": Does not invite comments.
+    decision_rules: []
+    cues:
+      "yes": [submit comments, comments must be received, written comments, request for comments, docket]
+    retrieval_query: submit comments by docket written comments must be received
