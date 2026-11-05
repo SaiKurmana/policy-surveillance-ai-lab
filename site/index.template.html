@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Policy Surveillance AI Lab</title>
+<meta name="description" content="Responsible, evaluable AI for public health policy surveillance: grounded search, cited Q&A, codebook-based policy coding with human review, and AI-vs-human agreement metrics over public Federal Register documents.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/style.css">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#">Policy Surveillance AI Lab</a>
+  <nav class="links">
+    <a href="#problem">Problem</a><a href="#how">How it works</a><a href="#evaluation">Evaluation</a>
+    <a href="#corpus">Corpus</a><a href="#governance">Governance</a>
+    <a href="{{repo_url}}">GitHub</a>
+  </nav>
+  <button class="theme-btn" id="theme" type="button" aria-label="Toggle light or dark theme">Theme</button>
+</div></header>
+
+<main>
+<div class="wrap hero">
+  <div class="eyebrow">Portfolio project &middot; public health informatics</div>
+  <h1>AI that assists policy surveillance, and a way to measure whether you can trust it.</h1>
+  <p class="lede">Search {{n_docs}} public-domain Federal Register documents on nutrition, physical activity, and
+  obesity prevention. Ask questions answered only from the documents you select, with a citation on every sentence.
+  Code documents against a structured policy codebook, review every AI code, and measure AI-vs-human agreement.</p>
+  <div class="btns">
+    <a class="btn primary disabled" aria-disabled="true" title="Live app link will be added after deployment">Live app (coming soon)</a>
+    <a class="btn" href="{{repo_url}}">Source on GitHub</a>
+    <a class="btn" href="docs/evaluation_protocol.html">Evaluation protocol</a>
+  </div>
+  <p class="disclaimer" style="margin-top:24px"><strong>Disclaimer.</strong> {{disclaimer}}</p>
+</div>
+
+<section id="problem"><div class="wrap">
+  <h2>The problem</h2>
+  <div class="grid">
+    <div class="card"><h3>Manual review is slow</h3><p>Federal rules on school meals, WIC food packages, or food labeling often run 80 to 250 printed pages. Analysts read them end to end to answer a few structured questions.</p></div>
+    <div class="card"><h3>Coding is inconsistent</h3><p>Two trained coders reading the same rule can disagree on its setting, mechanism, or legal force. Without a codebook and agreement metrics, nobody knows how much.</p></div>
+    <div class="card"><h3>AI without evidence is a risk</h3><p>A fluent answer with no traceable source cannot be used in public health practice. Every claim needs a citation a reviewer can check in seconds.</p></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <h2>How it works</h2>
+  <p class="muted">The AI proposes; a human decides. Every proposal carries its evidence, and every decision is logged.</p>
+  <div class="diagram" role="img" aria-label="Architecture: Federal Register API metadata and GovInfo full text feed a corpus builder that produces chunks with stable IDs; hybrid retrieval serves search, grounded Q&A with a citation verifier, and policy coding; AI codes go to a human review queue logged in DuckDB; evaluation compares AI codes with a human gold standard.">
+    <div class="flow">
+      <div class="stage"><span class="stage-label">Sources</span>
+        <div class="node"><b>Federal Register API</b><small>metadata, discovery queries</small></div>
+        <div class="node"><b>GPO GovInfo</b><small>official full text</small></div></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="stage"><span class="stage-label">Corpus</span>
+        <div class="node"><b>Corpus builder</b><small>manifest + access dates</small></div>
+        <div class="node"><b>Chunks with stable IDs</b><small>doc number + paragraph offsets</small></div></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="stage"><span class="stage-label">Retrieval</span>
+        <div class="node wide"><b>Hybrid retrieval</b><small>BM25 + local embeddings, fused by rank</small></div></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="stage"><span class="stage-label">AI assists</span>
+        <div class="node"><b>Search</b><small>agency, topic, date filters</small></div>
+        <div class="node"><b>Grounded Q&amp;A</b><small>cite every sentence &rarr; citation verifier</small></div>
+        <div class="node"><b>Policy coding</b><small>YAML codebook, pydantic-validated</small></div></div>
+      <div class="arrow" aria-hidden="true"></div>
+      <div class="stage"><span class="stage-label">Humans decide</span>
+        <div class="node accent"><b>Review queue</b><small>accept / edit / reject + reason &rarr; DuckDB audit trail</small></div>
+        <div class="node accent"><b>Evaluation</b><small>AI vs. human gold standard: accuracy, kappa, recall@k</small></div></div>
+    </div>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h3>Grounded answers</h3><p>The model sees only retrieved passages from documents you pick. Each sentence must cite a chunk ID; a verifier checks word overlap and that every number appears in the cited text.</p></div>
+    <div class="card"><h3>Structured coding</h3><p>{{n_vars}} codebook variables (domain, population, setting, mechanism, legal force, stage, effective date, nutrients, equity, evaluation, public comment). Each code includes a verbatim quote, a chunk ID, and a confidence score.</p></div>
+    <div class="card"><h3>Human in the loop</h3><p>Reviewers accept, edit, or reject each code with a reason. The audit trail records reviewer, time spent, model, and prompt version.</p></div>
+    <div class="card"><h3>Swappable models</h3><p>Claude runs behind a provider interface. With no API key, the app runs in a clearly labeled demo mode with an offline baseline, which is also what CI tests against.</p></div>
+  </div>
+</div></section>
+
+<section id="screens"><div class="wrap">
+  <h2>Screenshots</h2>
+  <p class="muted">Captured from the app in demo mode (offline baseline, no API key).</p>
+  <div class="shots">
+    <figure><img src="static/screens/search.webp" alt="Search results for added sugars limits for breakfast cereals, showing passages with chunk IDs and source links" loading="lazy" width="1300" height="900"><figcaption>Hybrid search with source links and chunk IDs</figcaption></figure>
+    <figure><img src="static/screens/ask.webp" alt="Grounded answer where each sentence is marked supported and cites a chunk" loading="lazy" width="1300" height="900"><figcaption>Grounded Q&amp;A with per-sentence citation checks</figcaption></figure>
+    <figure><img src="static/screens/review.webp" alt="Review queue card showing an AI code, its quote, and accept, edit, reject controls" loading="lazy" width="1300" height="900"><figcaption>Review queue: accept, edit, or reject with a reason</figcaption></figure>
+    <figure><img src="static/screens/audit.webp" alt="Audit trail table listing a review decision with reviewer and model" loading="lazy" width="1300" height="900"><figcaption>Append-only audit trail</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="evaluation"><div class="wrap">
+  <h2>Evaluation</h2>
+  {{eval_notice}}
+  <div class="grid">
+    <div class="card"><div class="stat">{{macro_acc}}</div><div class="stat-label">Coding macro accuracy</div></div>
+    <div class="card"><div class="stat">{{macro_kappa}}</div><div class="stat-label">Coding macro kappa</div></div>
+    <div class="card"><div class="stat">{{recall5}}</div><div class="stat-label">Retrieval recall@5 ({{ret_mode}})</div></div>
+    <div class="card"><div class="stat">{{correct_abst}}</div><div class="stat-label">Correct abstention on unanswerable questions</div></div>
+  </div>
+  <h3 style="margin-top:24px">Agreement by codebook variable</h3>
+  <div class="legend"><span><i class="sw" style="background:var(--bar-1)"></i>Accuracy (abstain counts as miss)</span><span><i class="sw" style="background:var(--bar-2)"></i>Cohen's kappa (per-label mean for multi-select)</span></div>
+  <div class="bars">{{bars}}</div>
+  <p class="muted" style="margin-top:16px">Full tables, retrieval curves, and what each number means: <a href="{{repo_url}}/blob/main/eval/results.md">eval/results.md</a> and the <a href="docs/evaluation_protocol.html">evaluation protocol</a>. Generated {{generated}}.</p>
+</div></section>
+
+<section id="corpus"><div class="wrap">
+  <h2>Corpus</h2>
+  <p class="muted">{{n_docs}} documents, {{n_chunks}} citable chunks. Metadata from the <a href="https://www.federalregister.gov/developers/documentation/api/v1">Federal Register API</a>; full text from <a href="https://www.govinfo.gov/app/collection/fr">GPO GovInfo</a>. Federal government works are public domain (17 U.S.C. 105). Every document is listed with its access date in <a href="{{repo_url}}/blob/main/data/corpus_manifest.csv">data/corpus_manifest.csv</a>.</p>
+  <div class="grid">
+    <div class="table-wrap"><table><thead><tr><th>Topic</th><th class="num">Docs</th></tr></thead><tbody>{{topic_rows}}</tbody></table></div>
+    <div class="table-wrap"><table><thead><tr><th>Agency</th><th class="num">Docs</th></tr></thead><tbody>{{agency_rows}}</tbody></table></div>
+  </div>
+</div></section>
+
+<section id="governance"><div class="wrap">
+  <h2>Governance templates</h2>
+  <p class="muted">Written as practical templates that a health agency could adapt.</p>
+  <div class="grid">
+    <a class="card" href="docs/responsible_use.html" style="text-decoration:none;color:inherit"><h3>Responsible use</h3><p>Intended and out-of-scope uses, the human review requirement, limitations.</p></a>
+    <a class="card" href="docs/model_card.html" style="text-decoration:none;color:inherit"><h3>Model card</h3><p>Models, prompts, versions, and known failure modes.</p></a>
+    <a class="card" href="docs/data_governance.html" style="text-decoration:none;color:inherit"><h3>Data governance</h3><p>Sources, licensing, access, retention, and what is never collected.</p></a>
+    <a class="card" href="docs/evaluation_protocol.html" style="text-decoration:none;color:inherit"><h3>Evaluation protocol</h3><p>How to build the gold standard, run the evaluation, and read the results.</p></a>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <p>{{disclaimer}}</p>
+  <p>Built by Sai Kurmana, MPH, MS, CPHIMS. Code: <a href="{{repo_url}}">GitHub</a>.</p>
+</div></footer>
+
+<script>
+(function(){
+  var b=document.getElementById("theme");
+  b.addEventListener("click",function(){
+    var cur=document.documentElement.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+    var next=cur==="dark"?"light":"dark";
+    document.documentElement.dataset.theme=next;
+    try{localStorage.setItem("theme",next);}catch(e){}
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>
