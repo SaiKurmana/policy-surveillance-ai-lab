@@ -16,7 +16,7 @@ import yaml
 from . import paths
 from .codebook import load_codebook
 
-REPO_URL = "https://github.com/saikurmana/chronic-disease-surveillance-harmonization"
+REPO_URL = "https://github.com/saikurmana/policy-surveillance-ai-lab"
 DISCLAIMER = (
     "Independent portfolio project. Not affiliated with, endorsed by, or produced for the CDC or "
     "any government agency. Uses only public-domain documents. AI outputs require human review."

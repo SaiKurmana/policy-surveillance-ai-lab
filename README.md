@@ -4,8 +4,8 @@
 
 > **Independent portfolio project. Not affiliated with, endorsed by, or produced for the CDC or any government agency. Uses only public-domain documents. AI outputs require human review.**
 
-[![CI](https://github.com/saikurmana/chronic-disease-surveillance-harmonization/actions/workflows/ci.yml/badge.svg)](https://github.com/saikurmana/chronic-disease-surveillance-harmonization/actions/workflows/ci.yml)
-Project site: https://saikurmana.github.io/chronic-disease-surveillance-harmonization/ (published by the Pages workflow) · Live app: _placeholder, not yet deployed_
+[![CI](https://github.com/saikurmana/policy-surveillance-ai-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/saikurmana/policy-surveillance-ai-lab/actions/workflows/ci.yml)
+Project site: https://saikurmana.github.io/policy-surveillance-ai-lab/ (published by the Pages workflow) · Live app: _placeholder, not yet deployed_
 
 ## The problem
 

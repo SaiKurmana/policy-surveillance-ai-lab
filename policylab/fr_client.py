@@ -16,8 +16,7 @@ import requests
 FR_API = "https://www.federalregister.gov/api/v1"
 GOVINFO_HTML = "https://www.govinfo.gov/content/pkg/FR-{date}/html/{number}.htm"
 USER_AGENT = (
-    "policy-surveillance-ai-lab/0.1 "
-    "(+https://github.com/saikurmana/chronic-disease-surveillance-harmonization)"
+    "policy-surveillance-ai-lab/0.1 (+https://github.com/saikurmana/policy-surveillance-ai-lab)"
 )
 
 DOC_FIELDS = [
