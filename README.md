@@ -5,7 +5,7 @@
 > **Independent portfolio project. Not affiliated with, endorsed by, or produced for the CDC or any government agency. Uses only public-domain documents. AI outputs require human review.**
 
 [![CI](https://github.com/saikurmana/policy-surveillance-ai-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/saikurmana/policy-surveillance-ai-lab/actions/workflows/ci.yml)
-Project site: https://saikurmana.github.io/policy-surveillance-ai-lab/ (published by the Pages workflow) · Live app: _placeholder, not yet deployed_
+Project site: https://saikurmana.github.io/policy-surveillance-ai-lab/ (published by the Pages workflow) · Live app: https://policy-ai-lab.streamlit.app/ (demo mode by default)
 
 ## The problem
 
@@ -108,7 +108,7 @@ python -m policylab.evaluation --provider anthropic
 
 ## Deploying to Streamlit Community Cloud
 
-The repository is ready to deploy as is:
+The app is deployed at **https://policy-ai-lab.streamlit.app/**. To deploy your own copy, use these settings:
 
 | Setting | Value |
 |---|---|
