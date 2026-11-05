@@ -58,4 +58,6 @@ When live AI is enabled, retrieved public passages, the user's question, and the
 
 ## 7. Secrets
 
-No API keys are stored in the repository. The app reads `ANTHROPIC_API_KEY` from the environment or from Streamlit secrets (`.streamlit/secrets.toml`, which is git-ignored). CI uses the offline baseline and has no key.
+No API keys or passwords are stored in the repository. The app reads `ANTHROPIC_API_KEY` and `LIVE_MODE_PASSWORD` from the environment or from Streamlit secrets (`.streamlit/secrets.toml`, which is git-ignored). CI uses the offline baseline and has no key.
+
+A public deployment stays in demo mode by default. Live LLM mode turns on only when **both** secrets are set **and** the viewer enters the `LIVE_MODE_PASSWORD` value in the sidebar. A key without a password secret never enables live mode, so anonymous visitors cannot spend the operator's API budget. The password is compared in constant time and is not logged or written to the audit trail.

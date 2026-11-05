@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import os
-
 from .base import LLMError, LLMResponse, T, Task
+from .config import setting
 
-DEFAULT_MODEL = "claude-opus-5-5"
+# Override with the POLICYLAB_MODEL environment variable or Streamlit secret.
+DEFAULT_MODEL = "claude-sonnet-5-5"
 
 
 class AnthropicProvider:
@@ -21,8 +21,8 @@ class AnthropicProvider:
         max_tokens: int = 16000,
         client=None,
     ):
-        self.model = model or os.environ.get("POLICYLAB_MODEL", DEFAULT_MODEL)
-        self.effort = effort or os.environ.get("POLICYLAB_EFFORT", "medium")
+        self.model = model or setting("POLICYLAB_MODEL") or DEFAULT_MODEL
+        self.effort = effort or setting("POLICYLAB_EFFORT") or "medium"
         self.max_tokens = max_tokens
         if client is None:
             import anthropic

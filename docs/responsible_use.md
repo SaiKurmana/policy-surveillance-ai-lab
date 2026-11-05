@@ -41,7 +41,7 @@ This tool helps public health analysts **find, read, and code** public policy do
 - **The citation verifier is lexical.** It catches invented chunk IDs, wrong-passage citations, and changed numbers. It does **not** catch a sentence that reuses the source's words but reverses its meaning, or a correct quote taken out of context (for example, a commenter's request presented as the agency's decision).
 - **Preambles are not rules.** Federal Register preambles summarize public comments, alternatives considered, and economic analyses. Models can confuse these with what the agency adopted.
 - **Documents change.** Rules are amended, delayed, or vacated after publication. The corpus is a dated snapshot; the tool does not know about later actions unless they are in the corpus.
-- **The demo mode is not AI.** Without an API key the app uses an offline keyword/extractive baseline. Its output is labeled and exists to demonstrate the workflow.
+- **The demo mode is not AI.** Unless live mode is unlocked (API key plus the live mode password), the app uses an offline keyword/extractive baseline. Its output is labeled and exists to demonstrate the workflow.
 - **Agreement metrics depend on the gold standard.** Until a human-verified gold standard exists, reported agreement numbers are pipeline checks, not evidence of accuracy.
 
 ## 6. Accountability

@@ -3,6 +3,10 @@
 ``get_provider()`` returns the Anthropic provider when ANTHROPIC_API_KEY is set
 (environment variable or Streamlit secret) and the deterministic offline
 baseline otherwise. Tests always use the offline provider so CI needs no key.
+
+The Streamlit app does not use the automatic choice: it asks for the offline
+baseline unless ``live_mode_unlocked()`` confirms the viewer entered the
+LIVE_MODE_PASSWORD secret.
 """
 
 from __future__ import annotations
@@ -10,6 +14,7 @@ from __future__ import annotations
 import os
 
 from .base import LLMError, LLMProvider, LLMResponse, Task
+from .config import live_mode_unlocked, setting
 from .mock import MockProvider
 
 __all__ = [
@@ -20,19 +25,13 @@ __all__ = [
     "Task",
     "get_provider",
     "api_key",
+    "live_mode_unlocked",
+    "setting",
 ]
 
 
 def api_key() -> str | None:
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if key:
-        return key
-    try:  # Streamlit secrets, when running inside Streamlit
-        import streamlit as st
-
-        return st.secrets.get("ANTHROPIC_API_KEY")  # type: ignore[no-any-return]
-    except Exception:
-        return None
+    return setting("ANTHROPIC_API_KEY")
 
 
 def get_provider(name: str | None = None, model: str | None = None) -> LLMProvider:

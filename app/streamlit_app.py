@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from policylab import db, paths  # noqa: E402
 from policylab.codebook import NOT_STATED, default_codebook  # noqa: E402
 from policylab.coding import code_document  # noqa: E402
-from policylab.llm import LLMError, api_key, get_provider  # noqa: E402
+from policylab.llm import LLMError, api_key, get_provider, live_mode_unlocked, setting  # noqa: E402
 from policylab.qa import ask  # noqa: E402
 from policylab.retrieval import Filters, HybridRetriever  # noqa: E402
 from policylab.store import load_corpus  # noqa: E402
@@ -52,8 +52,9 @@ def database():
 corpus, retriever = resources()
 codebook = default_codebook()
 con = database()
-LIVE = bool(api_key())
-provider = get_provider()
+# Live LLM mode needs BOTH an ANTHROPIC_API_KEY secret and the viewer entering
+# the LIVE_MODE_PASSWORD secret in the sidebar. Everyone else gets demo mode.
+LIVE_AVAILABLE = bool(api_key() and setting("LIVE_MODE_PASSWORD"))
 
 
 def doc_label(n: str) -> str:
@@ -84,12 +85,25 @@ with st.sidebar:
         label_visibility="collapsed",
     )
     st.divider()
+    entered = None
+    if LIVE_AVAILABLE:
+        entered = st.text_input(
+            "Live mode password",
+            type="password",
+            key="live_password",
+            help="Unlocks the live Claude model. Without it the app stays in demo mode.",
+        )
+    LIVE = live_mode_unlocked(entered)
+    provider = get_provider("anthropic" if LIVE else "mock")
     if LIVE:
         st.success(f"Live AI: {provider.model}", icon=":material/bolt:")
     else:
+        if entered:
+            st.error("Incorrect live mode password.", icon=":material/lock:")
         st.warning(
-            "**Demo mode** - no API key found. Search is real; Ask and Code use the offline "
-            "keyword/extractive baseline (not an LLM).",
+            "**Demo mode** - Search is real; Ask and Code use the offline keyword/extractive "
+            "baseline (not an LLM)."
+            + ("" if LIVE_AVAILABLE else " Live AI is not configured for this deployment."),
             icon=":material/science:",
         )
     st.caption(

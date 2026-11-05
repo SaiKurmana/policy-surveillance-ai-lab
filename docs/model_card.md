@@ -8,7 +8,7 @@ The system is a pipeline, not a single model. Each component is versioned separa
 
 | Component | Default | Version recorded as |
 |---|---|---|
-| Generative model (Q&A, coding) | Anthropic Claude `claude-opus-5-5`, effort `medium` (configurable via `POLICYLAB_MODEL`, `POLICYLAB_EFFORT`) | `model`, `served_model` |
+| Generative model (Q&A, coding) | Anthropic Claude `claude-sonnet-5-5`, effort `medium` (configurable via `POLICYLAB_MODEL`, `POLICYLAB_EFFORT`). Used only when live mode is unlocked (see [data governance](data_governance.md), section 7) | `model`, `served_model` |
 | Offline baseline (demo mode, CI) | `extractive-keyword-baseline-v1` (no ML; sentence extraction and codebook cue counting) | `model` |
 | Embedding model | `sentence-transformers/all-MiniLM-L6-v2` (384-dim, CPU) | `data/index/meta.json` |
 | Keyword retrieval | BM25 (k1 = 1.5, b = 0.75), fused with embeddings by reciprocal rank fusion (k = 60) | code version |
