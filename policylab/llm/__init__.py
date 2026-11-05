@@ -12,7 +12,15 @@ import os
 from .base import LLMError, LLMProvider, LLMResponse, Task
 from .mock import MockProvider
 
-__all__ = ["LLMError", "LLMProvider", "LLMResponse", "MockProvider", "Task", "get_provider", "api_key"]
+__all__ = [
+    "LLMError",
+    "LLMProvider",
+    "LLMResponse",
+    "MockProvider",
+    "Task",
+    "get_provider",
+    "api_key",
+]
 
 
 def api_key() -> str | None:

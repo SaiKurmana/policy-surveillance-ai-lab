@@ -63,8 +63,18 @@ def ask(
             sentences=[],
             missing_information="No passages in the selected documents matched the question.",
         )
-        return QAResult(question, answer, verify_answer(answer, {}), [], provider.name,
-                        provider.model, provider.model, QA_PROMPT_VERSION, sha, provider.is_live_llm)
+        return QAResult(
+            question,
+            answer,
+            verify_answer(answer, {}),
+            [],
+            provider.name,
+            provider.model,
+            provider.model,
+            QA_PROMPT_VERSION,
+            sha,
+            provider.is_live_llm,
+        )
     user = (
         f"PASSAGES:\n\n{format_passages(chunks, retriever.corpus.documents)}\n\n"
         f"QUESTION: {question}"
@@ -77,5 +87,15 @@ def ask(
     )
     answer: GroundedAnswer = resp.parsed  # type: ignore[assignment]
     verification = verify_answer(answer, {c["chunk_id"]: c["text"] for c in chunks})
-    return QAResult(question, answer, verification, chunks, resp.provider, resp.model,
-                    resp.served_model, QA_PROMPT_VERSION, sha, provider.is_live_llm)
+    return QAResult(
+        question,
+        answer,
+        verification,
+        chunks,
+        resp.provider,
+        resp.model,
+        resp.served_model,
+        QA_PROMPT_VERSION,
+        sha,
+        provider.is_live_llm,
+    )

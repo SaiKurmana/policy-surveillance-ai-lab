@@ -81,16 +81,37 @@ def _now() -> dt.datetime:
 def save_run(con: duckdb.DuckDBPyConnection, run: CodingRun) -> None:
     con.execute(
         "INSERT INTO coding_runs VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
-        [run.run_id, run.doc_number, run.provider, run.model, run.served_model, run.is_live_llm,
-         run.prompt_version, run.prompt_sha, run.codebook_version, json.dumps(run.chunk_ids),
-         json.dumps(run.problems), dt.datetime.fromisoformat(run.created_at).replace(tzinfo=None)],
+        [
+            run.run_id,
+            run.doc_number,
+            run.provider,
+            run.model,
+            run.served_model,
+            run.is_live_llm,
+            run.prompt_version,
+            run.prompt_sha,
+            run.codebook_version,
+            json.dumps(run.chunk_ids),
+            json.dumps(run.problems),
+            dt.datetime.fromisoformat(run.created_at).replace(tzinfo=None),
+        ],
     )
     for c in run.coding.codes:
         con.execute(
             "INSERT INTO ai_codes VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-            [f"{run.run_id}-{c.variable}", run.run_id, run.doc_number, c.variable, c.status,
-             json.dumps(c.values), c.supporting_quote, c.chunk_id, c.confidence, c.rationale,
-             run.quote_checks.get(c.variable)],
+            [
+                f"{run.run_id}-{c.variable}",
+                run.run_id,
+                run.doc_number,
+                c.variable,
+                c.status,
+                json.dumps(c.values),
+                c.supporting_quote,
+                c.chunk_id,
+                c.confidence,
+                c.rationale,
+                run.quote_checks.get(c.variable),
+            ],
         )
 
 
@@ -134,8 +155,23 @@ def record_decision(
     decision_id = uuid.uuid4().hex[:12]
     con.execute(
         "INSERT INTO review_decisions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        [decision_id, code_id, run_id, doc, var, decision, json.dumps(final), reason,
-         reviewer_id.strip(), _now(), seconds_spent, model, served, pv, cbv],
+        [
+            decision_id,
+            code_id,
+            run_id,
+            doc,
+            var,
+            decision,
+            json.dumps(final),
+            reason,
+            reviewer_id.strip(),
+            _now(),
+            seconds_spent,
+            model,
+            served,
+            pv,
+            cbv,
+        ],
     )
     return decision_id
 
@@ -156,9 +192,7 @@ def review_queue(con: duckdb.DuckDBPyConnection, doc_number: str | None = None):
 
 
 def audit_trail(con: duckdb.DuckDBPyConnection):
-    return con.execute(
-        "SELECT * FROM review_decisions ORDER BY decided_at DESC"
-    ).df()
+    return con.execute("SELECT * FROM review_decisions ORDER BY decided_at DESC").df()
 
 
 def review_summary(con: duckdb.DuckDBPyConnection):

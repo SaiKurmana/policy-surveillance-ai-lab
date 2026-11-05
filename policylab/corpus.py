@@ -146,9 +146,21 @@ def build(refresh: bool = False, only: list[str] | None = None) -> dict:
         rows.append(row)
         docs.append(
             {
-                **{k: row[k] for k in ("document_number", "title", "agency", "document_type",
-                                       "publication_date", "effective_on", "citation", "url",
-                                       "full_text_url", "access_date")},
+                **{
+                    k: row[k]
+                    for k in (
+                        "document_number",
+                        "title",
+                        "agency",
+                        "document_type",
+                        "publication_date",
+                        "effective_on",
+                        "citation",
+                        "url",
+                        "full_text_url",
+                        "access_date",
+                    )
+                },
                 "topics": doc_topics[n],
                 "agencies_all": row["agencies_all"].split("; "),
                 "action": meta.get("action"),

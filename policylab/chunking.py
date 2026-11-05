@@ -209,8 +209,10 @@ def chunk_paragraphs(doc_number: str, paras: list[Paragraph]) -> list[Chunk]:
             group.append(p)
             words += n
             continue
-        if group and not all(g.is_heading for g in group) and (
-            words + n > MAX_WORDS or words >= TARGET_WORDS
+        if (
+            group
+            and not all(g.is_heading for g in group)
+            and (words + n > MAX_WORDS or words >= TARGET_WORDS)
         ):
             flush()
             words = 0

@@ -1,6 +1,6 @@
 # Evaluation results
 
-_Generated 2026-11-05T05:15:03+00:00 by `make eval`. Do not edit by hand._
+_Generated 2026-11-05T05:31:36+00:00 by `make eval`. Do not edit by hand._
 
 > **These numbers come from the offline keyword/extractive baseline, not from an LLM.** They show that the evaluation pipeline runs end to end and set a floor a real model must beat. To evaluate Claude, run `python -m policylab.evaluation --provider anthropic` with `ANTHROPIC_API_KEY` set.
 >

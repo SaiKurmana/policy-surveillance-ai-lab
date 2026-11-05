@@ -25,7 +25,61 @@ EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 RRF_K = 60
 
 _STOP = set(
-    ["a", "an", "and", "are", "as", "at", "be", "been", "but", "by", "can", "for", "from", "had", "has", "have", "if", "in", "into", "is", "it", "its", "may", "not", "of", "on", "or", "our", "such", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "were", "which", "will", "with", "would", "we", "any", "all", "also", "other", "than", "under", "section", "sec"]
+    [
+        "a",
+        "an",
+        "and",
+        "are",
+        "as",
+        "at",
+        "be",
+        "been",
+        "but",
+        "by",
+        "can",
+        "for",
+        "from",
+        "had",
+        "has",
+        "have",
+        "if",
+        "in",
+        "into",
+        "is",
+        "it",
+        "its",
+        "may",
+        "not",
+        "of",
+        "on",
+        "or",
+        "our",
+        "such",
+        "that",
+        "the",
+        "their",
+        "then",
+        "there",
+        "these",
+        "they",
+        "this",
+        "to",
+        "was",
+        "were",
+        "which",
+        "will",
+        "with",
+        "would",
+        "we",
+        "any",
+        "all",
+        "also",
+        "other",
+        "than",
+        "under",
+        "section",
+        "sec",
+    ]
 )
 _TOKEN = re.compile(r"[a-z0-9]+(?:\.[0-9]+)?")
 
@@ -168,7 +222,20 @@ class Filters:
         keep = np.ones(len(corpus.chunks), dtype=bool)
         for i, c in enumerate(corpus.chunks):
             d = corpus.documents[c["doc_number"]]
-            if self.doc_numbers and c["doc_number"] not in self.doc_numbers or self.agencies and d["agency"] not in self.agencies or self.topics and not set(d["topics"]) & set(self.topics) or self.document_types and d["document_type"] not in self.document_types or self.date_from and d["publication_date"] < self.date_from or self.date_to and d["publication_date"] > self.date_to:
+            if (
+                self.doc_numbers
+                and c["doc_number"] not in self.doc_numbers
+                or self.agencies
+                and d["agency"] not in self.agencies
+                or self.topics
+                and not set(d["topics"]) & set(self.topics)
+                or self.document_types
+                and d["document_type"] not in self.document_types
+                or self.date_from
+                and d["publication_date"] < self.date_from
+                or self.date_to
+                and d["publication_date"] > self.date_to
+            ):
                 keep[i] = False
         return keep
 

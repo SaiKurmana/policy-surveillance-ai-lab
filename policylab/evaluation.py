@@ -127,14 +127,19 @@ def coding_agreement(
         if var.type == "multi":
             res["mean_jaccard"] = (
                 sum(jaccard(set(a["values"]), set(g.values)) for a, g in coded) / len(coded)
-                if coded else None
+                if coded
+                else None
             )
             res["kappa"] = multilabel_kappa(
-                [set(a["values"]) for a, _ in coded], [set(g.values) for _, g in coded], list(var.values)
+                [set(a["values"]) for a, _ in coded],
+                [set(g.values) for _, g in coded],
+                list(var.values),
             )
             res["kappa_kind"] = "mean per-label binary kappa"
         elif var.type == "single":
-            res["kappa"] = cohen_kappa([a["values"][0] for a, _ in coded], [g.values[0] for _, g in coded])
+            res["kappa"] = cohen_kappa(
+                [a["values"][0] for a, _ in coded], [g.values[0] for _, g in coded]
+            )
             res["kappa_kind"] = "Cohen's kappa"
         else:
             res["kappa"] = None
@@ -143,8 +148,9 @@ def coding_agreement(
 
     all_items = [g for g in gold]
     coded_quotes = [
-        a for (d, v), a in ai.items() if a["status"] == "coded" and a["quote_check"] in ("exact", "not_found",
-                                                                                          "invalid_chunk")
+        a
+        for (d, v), a in ai.items()
+        if a["status"] == "coded" and a["quote_check"] in ("exact", "not_found", "invalid_chunk")
     ]
     kappas = [r["kappa"] for r in per_var.values() if r.get("kappa") is not None]
     accs = [r["accuracy"] for r in per_var.values() if r.get("n_gold")]
@@ -156,7 +162,8 @@ def coding_agreement(
         "macro_kappa": sum(kappas) / len(kappas) if kappas else None,
         "quote_verification_rate": (
             sum(a["quote_check"] == "exact" for a in coded_quotes) / len(coded_quotes)
-            if coded_quotes else None
+            if coded_quotes
+            else None
         ),
     }
 
@@ -218,7 +225,9 @@ def qa_eval(retriever: HybridRetriever, provider, questions: list[dict]) -> dict
         }
         if q["answerable"]:
             terms = q.get("expect_terms", [])
-            row["key_facts_present"] = (not abstained) and all(normalize(t) in normalize(text) for t in terms)
+            row["key_facts_present"] = (not abstained) and all(
+                normalize(t) in normalize(text) for t in terms
+            )
         rows.append(row)
     ans = [r for r in rows if r["answerable"]]
     unans = [r for r in rows if not r["answerable"]]
@@ -228,9 +237,13 @@ def qa_eval(retriever: HybridRetriever, provider, questions: list[dict]) -> dict
     return {
         "n_questions": len(rows),
         "abstention_rate": sum(r["abstained"] for r in rows) / len(rows),
-        "correct_abstention_rate": sum(r["abstained"] for r in unans) / len(unans) if unans else None,
+        "correct_abstention_rate": sum(r["abstained"] for r in unans) / len(unans)
+        if unans
+        else None,
         "false_abstention_rate": sum(r["abstained"] for r in ans) / len(ans) if ans else None,
-        "key_fact_accuracy": sum(bool(r.get("key_facts_present")) for r in ans) / len(ans) if ans else None,
+        "key_fact_accuracy": sum(bool(r.get("key_facts_present")) for r in ans) / len(ans)
+        if ans
+        else None,
         "citation_precision": supported / total_cit if total_cit else None,
         "mean_answer_citation_precision": sum(cp) / len(cp) if cp else None,
         "per_question": rows,
@@ -251,7 +264,10 @@ def time_saved() -> dict:
     review = cfg.get("review_minutes_per_document")
     est = None
     if manual and review:
-        est = {"minutes_saved_per_document": manual - review, "percent_saved": (manual - review) / manual}
+        est = {
+            "minutes_saved_per_document": manual - review,
+            "percent_saved": (manual - review) / manual,
+        }
     return {
         "status": "measured" if est else "placeholder - not measured",
         "manual_minutes_per_document": manual,
@@ -284,8 +300,16 @@ def write_charts(results: dict, out: Path) -> list[str]:
     out.mkdir(parents=True, exist_ok=True)
     surface, ink, muted, grid = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
     s1, s2 = "#2a78d6", "#eb6834"
-    plt.rcParams.update({"font.size": 10, "axes.edgecolor": grid, "axes.labelcolor": muted,
-                         "xtick.color": muted, "ytick.color": muted, "text.color": ink})
+    plt.rcParams.update(
+        {
+            "font.size": 10,
+            "axes.edgecolor": grid,
+            "axes.labelcolor": muted,
+            "xtick.color": muted,
+            "ytick.color": muted,
+            "text.color": ink,
+        }
+    )
     files = []
 
     pv = results["coding"]["per_variable"]
@@ -306,8 +330,12 @@ def write_charts(results: dict, out: Path) -> list[str]:
         for s in ("top", "right"):
             ax.spines[s].set_visible(False)
         ax.legend(loc="lower left", bbox_to_anchor=(0, 1.0), ncol=2, frameon=False, fontsize=9)
-        fig.suptitle(f"Coding agreement by variable - {results['provider']['label']}", x=0.02, ha="left",
-                     fontsize=11)
+        fig.suptitle(
+            f"Coding agreement by variable - {results['provider']['label']}",
+            x=0.02,
+            ha="left",
+            fontsize=11,
+        )
         fig.tight_layout()
         p = out / "coding_agreement.png"
         fig.savefig(p, dpi=150, facecolor=surface)
@@ -322,8 +350,15 @@ def write_charts(results: dict, out: Path) -> list[str]:
         if not r:
             continue
         ks = list(r["recall_at_k"])
-        ax.plot([int(k) for k in ks], [r["recall_at_k"][k] for k in ks], color=color, lw=2,
-                marker="o", ms=6, label=f"{r['mode']} (MRR {r['mrr_at_10']:.2f})")
+        ax.plot(
+            [int(k) for k in ks],
+            [r["recall_at_k"][k] for k in ks],
+            color=color,
+            lw=2,
+            marker="o",
+            ms=6,
+            label=f"{r['mode']} (MRR {r['mrr_at_10']:.2f})",
+        )
     ax.set_ylim(0, 1.02)
     ax.set_xticks([1, 3, 5, 10])
     ax.set_xlabel("k (passages returned)")
@@ -332,7 +367,9 @@ def write_charts(results: dict, out: Path) -> list[str]:
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     ax.legend(frameon=False, fontsize=9, loc="lower right")
-    ax.set_title("Retrieval: share of questions with a relevant passage in top k", loc="left", fontsize=11)
+    ax.set_title(
+        "Retrieval: share of questions with a relevant passage in top k", loc="left", fontsize=11
+    )
     fig.tight_layout()
     p = out / "retrieval_recall.png"
     fig.savefig(p, dpi=150, facecolor=surface)
@@ -465,7 +502,9 @@ def write_markdown(results: dict, path: Path) -> None:
     path.write_text("\n".join(lines))
 
 
-def run(provider_name: str = "mock", limit_docs: int | None = None, use_embeddings: bool = True) -> dict:
+def run(
+    provider_name: str = "mock", limit_docs: int | None = None, use_embeddings: bool = True
+) -> dict:
     corpus = load_corpus()
     codebook = load_codebook()
     provider = get_provider(provider_name)
@@ -484,20 +523,35 @@ def run(provider_name: str = "mock", limit_docs: int | None = None, use_embeddin
         run_ = code_document(d, codebook, bm25 if provider_name == "mock" else retriever, provider)
         runs.append({"doc": d, "problems": run_.problems, "served_model": run_.served_model})
         for c in run_.coding.codes:
-            ai[(d, c.variable)] = {"status": c.status, "values": c.values, "confidence": c.confidence,
-                                   "quote_check": run_.quote_checks.get(c.variable)}
+            ai[(d, c.variable)] = {
+                "status": c.status,
+                "values": c.values,
+                "confidence": c.confidence,
+                "quote_check": run_.quote_checks.get(c.variable),
+            }
 
     pairs_doc = yaml.safe_load(paths.RETRIEVAL_PAIRS.read_text())
     qa_doc = yaml.safe_load(paths.QA_QUESTIONS.read_text())
-    retrieval = {"primary": retrieval_eval(retriever, pairs_doc["pairs"]), "pairs_status": pairs_doc["status"]}
+    retrieval = {
+        "primary": retrieval_eval(retriever, pairs_doc["pairs"]),
+        "pairs_status": pairs_doc["status"],
+    }
     if retriever.mode != "bm25":
         retrieval["bm25_only"] = retrieval_eval(bm25, pairs_doc["pairs"])
 
-    label = "Offline baseline (keyword/extractive, not an LLM)" if not provider.is_live_llm else f"Anthropic {provider.model}"
+    label = (
+        "Offline baseline (keyword/extractive, not an LLM)"
+        if not provider.is_live_llm
+        else f"Anthropic {provider.model}"
+    )
     results = {
         "generated_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-        "provider": {"name": provider.name, "model": provider.model, "is_live_llm": provider.is_live_llm,
-                     "label": label},
+        "provider": {
+            "name": provider.name,
+            "model": provider.model,
+            "is_live_llm": provider.is_live_llm,
+            "label": label,
+        },
         "prompt_versions": {"coding": "coding_v1", "qa": "qa_v1"},
         "codebook_version": codebook.version,
         "corpus": {"documents": len(corpus.documents), "chunks": len(corpus.chunks)},
@@ -509,8 +563,8 @@ def run(provider_name: str = "mock", limit_docs: int | None = None, use_embeddin
         },
         "coding": coding_agreement(ai, gold, codebook),
         "coding_runs": runs,
-        "qa": qa_eval(bm25 if provider_name == "mock" else retriever, provider, qa_doc["questions"]) | {
-            "questions_status": qa_doc["status"]},
+        "qa": qa_eval(bm25 if provider_name == "mock" else retriever, provider, qa_doc["questions"])
+        | {"questions_status": qa_doc["status"]},
         "retrieval": retrieval,
         "time_saved": time_saved(),
     }
@@ -523,17 +577,25 @@ def run(provider_name: str = "mock", limit_docs: int | None = None, use_embeddin
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--provider", default="mock", choices=["mock", "anthropic"])
-    ap.add_argument("--limit-docs", type=int, default=None, help="evaluate only the first N gold docs")
+    ap.add_argument(
+        "--limit-docs", type=int, default=None, help="evaluate only the first N gold docs"
+    )
     ap.add_argument("--no-embeddings", action="store_true", help="BM25 only (CI)")
     args = ap.parse_args()
     r = run(args.provider, args.limit_docs, use_embeddings=not args.no_embeddings)
     c = r["coding"]
-    print(f"coding: macro_accuracy={_fmt(c['macro_accuracy'])} macro_kappa={_fmt(c['macro_kappa'])} "
-          f"(gold tier: {r['gold']['tier']}, provider: {r['provider']['label']})")
-    print(f"qa: citation_precision={_fmt(r['qa']['citation_precision'])} "
-          f"correct_abstention={_fmt(r['qa']['correct_abstention_rate'])}")
+    print(
+        f"coding: macro_accuracy={_fmt(c['macro_accuracy'])} macro_kappa={_fmt(c['macro_kappa'])} "
+        f"(gold tier: {r['gold']['tier']}, provider: {r['provider']['label']})"
+    )
+    print(
+        f"qa: citation_precision={_fmt(r['qa']['citation_precision'])} "
+        f"correct_abstention={_fmt(r['qa']['correct_abstention_rate'])}"
+    )
     p = r["retrieval"]["primary"]
-    print(f"retrieval ({p['mode']}): recall@5={_fmt(p['recall_at_k']['5'])} mrr={_fmt(p['mrr_at_10'])}")
+    print(
+        f"retrieval ({p['mode']}): recall@5={_fmt(p['recall_at_k']['5'])} mrr={_fmt(p['mrr_at_10'])}"
+    )
     print(f"wrote {paths.EVAL_RESULTS_MD.relative_to(paths.ROOT)}")
 
 

@@ -30,7 +30,9 @@ class AnthropicProvider:
             client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
         self.client = client
 
-    def structured(self, *, system: str, user: str, output_model: type[T], task: Task) -> LLMResponse:
+    def structured(
+        self, *, system: str, user: str, output_model: type[T], task: Task
+    ) -> LLMResponse:
         import anthropic
 
         schema = anthropic.transform_schema(output_model)

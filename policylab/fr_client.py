@@ -47,7 +47,9 @@ DOC_FIELDS = [
 
 
 class FederalRegisterClient:
-    def __init__(self, delay: float = 0.6, timeout: int = 60, session: requests.Session | None = None):
+    def __init__(
+        self, delay: float = 0.6, timeout: int = 60, session: requests.Session | None = None
+    ):
         self.delay = delay
         self.timeout = timeout
         self.session = session or requests.Session()

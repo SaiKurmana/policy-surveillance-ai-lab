@@ -51,7 +51,9 @@ class CodedVariable(_Strict):
     supporting_quote: str = Field(
         description="Exact quote copied from the cited chunk. Empty if insufficient_evidence."
     )
-    chunk_id: str = Field(description="Chunk ID containing the quote. Empty if insufficient_evidence.")
+    chunk_id: str = Field(
+        description="Chunk ID containing the quote. Empty if insufficient_evidence."
+    )
     confidence: float = Field(ge=0.0, le=1.0, description="Self-reported confidence 0-1.")
     rationale: str = Field(description="One or two sentences explaining the code.")
 

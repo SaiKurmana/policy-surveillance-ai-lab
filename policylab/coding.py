@@ -51,7 +51,9 @@ class CodingRun:
     prompt_sha: str
     codebook_version: str
     is_live_llm: bool
-    created_at: str = field(default_factory=lambda: dt.datetime.now(dt.UTC).isoformat(timespec="seconds"))
+    created_at: str = field(
+        default_factory=lambda: dt.datetime.now(dt.UTC).isoformat(timespec="seconds")
+    )
 
 
 def code_document(
