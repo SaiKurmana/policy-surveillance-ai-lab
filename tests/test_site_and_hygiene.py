@@ -36,3 +36,10 @@ def test_no_api_keys_committed():
         if p.suffix in {".gz", ".png", ".webp", ".duckdb"} or not p.is_file():
             continue
         assert not pattern.search(p.read_text(errors="ignore")), f
+
+
+def test_root_requirements_stay_light_for_streamlit_cloud():
+    """The app runs without the embedding model (BM25 fallback), so keep torch out of the deploy."""
+    reqs = (paths.ROOT / "requirements.txt").read_text().lower()
+    for heavy in ("torch", "sentence-transformers", "sentence_transformers"):
+        assert heavy not in reqs

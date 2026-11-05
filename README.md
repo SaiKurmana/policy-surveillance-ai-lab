@@ -21,7 +21,7 @@ Policy surveillance means reading laws and regulations and turning them into str
 | **Human in the loop** | A review queue where a reviewer accepts, edits, or rejects each code, with a reason. Decisions go to an append-only DuckDB audit trail with reviewer ID, timestamp, time spent, model, served model, prompt version, and codebook version. |
 | **Rigorous evaluation** | Per-variable accuracy and Cohen's kappa, quote verification, citation precision, abstention rates, and retrieval recall@k. The [protocol](docs/evaluation_protocol.md) explains how to build the human gold standard and read the results. |
 | **Governance** | [Responsible use](docs/responsible_use.md), [model card](docs/model_card.md), [data governance](docs/data_governance.md), and [evaluation protocol](docs/evaluation_protocol.md), written as templates another health agency could adapt. |
-| **Swappable, keyless by default** | Claude runs behind a provider interface. With no API key the app runs in a clearly labeled demo mode with an offline baseline. CI uses that baseline and needs no secrets. |
+| **Swappable, keyless by default** | Claude runs behind a provider interface. The app runs in a clearly labeled demo mode with an offline baseline unless an operator configures a key and the viewer enters the live mode password. CI uses that baseline and needs no secrets. |
 
 A useful analogy: the AI here works like a research assistant who hands you sticky-noted pages. Every claim points to the exact paragraph it came from. You still decide what goes in the report, and the notebook records who signed off.
 
@@ -85,26 +85,57 @@ make corpus                     # rebuild the corpus from the live APIs
 
 ## Enabling live AI with your own key
 
-The app and evaluation read `ANTHROPIC_API_KEY` from the environment or from Streamlit secrets. Keys are never stored in this repository.
+The app stays in demo mode by default, including on a public deployment. Live LLM mode turns on only when **both** conditions hold:
+
+1. `ANTHROPIC_API_KEY` and `LIVE_MODE_PASSWORD` are set, in the environment or in Streamlit secrets.
+2. The viewer types the `LIVE_MODE_PASSWORD` value into the **Live mode password** box in the sidebar.
+
+A key without a password secret never enables live mode, so visitors to a public app cannot spend your API budget. Think of the key as the car and the password as the ignition key: having the car parked outside does not let a passer-by drive it. Keys and passwords are never stored in this repository.
 
 ```bash
-export ANTHROPIC_API_KEY=...   # your own key
-make app
+export ANTHROPIC_API_KEY=...        # your own key
+export LIVE_MODE_PASSWORD=...       # any long random string
+make app                            # then enter the password in the sidebar
 ```
 
-For Streamlit Community Cloud, add the key under the app's **Settings → Secrets** as `ANTHROPIC_API_KEY = "..."`. Locally you can use `.streamlit/secrets.toml`, which is git-ignored.
+Locally you can put both in `.streamlit/secrets.toml` (git-ignored; see [`.streamlit/secrets.toml.example`](.streamlit/secrets.toml.example)).
 
-Defaults: model `claude-opus-5-5`, effort `medium`, structured outputs validated by pydantic, server-side refusal fallback enabled (the model that actually answered is recorded as `served_model`). Override with `POLICYLAB_MODEL` and `POLICYLAB_EFFORT`. To evaluate the live model:
+Defaults: model `claude-sonnet-5-5`, effort `medium`, structured outputs validated by pydantic, server-side refusal fallback enabled (the model that actually answered is recorded as `served_model`). Override with the `POLICYLAB_MODEL` and `POLICYLAB_EFFORT` environment variables or secrets, for example `POLICYLAB_MODEL=claude-opus-5-5`. The evaluation CLI does not need the password; it uses the key directly:
 
 ```bash
 python -m policylab.evaluation --provider anthropic
 ```
+
+## Deploying to Streamlit Community Cloud
+
+The repository is ready to deploy as is:
+
+| Setting | Value |
+|---|---|
+| Repository / branch | `saikurmana/policy-surveillance-ai-lab`, `main` |
+| Main file path | `app/streamlit_app.py` |
+| Python version (Advanced settings) | 3.11 |
+| Dependencies | `requirements.txt` at the repository root (installed automatically) |
+
+`requirements.txt` deliberately leaves out `torch` and `sentence-transformers`. Without them the app uses BM25 keyword search and says so in the sidebar; everything else works the same. That keeps the deploy small and fast to start. Hybrid search needs `make install-ml && make index`, which is meant for local use.
+
+To allow live mode on the deployed app, paste into **Settings → Secrets**:
+
+```toml
+ANTHROPIC_API_KEY = "..."
+LIVE_MODE_PASSWORD = "..."
+# POLICYLAB_MODEL = "claude-sonnet-5-5"   # optional override
+```
+
+Leave the secrets empty for a demo-only deployment. The review queue writes to a local DuckDB file, which Streamlit Cloud resets when the app restarts, so treat the hosted audit trail as a demo.
 
 ## Corpus
 
 61 documents, 5,094 citable chunks, built on 2026-11-05. Metadata comes from the [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1). Full text comes from [GPO GovInfo](https://www.govinfo.gov/app/collection/fr), because FederalRegister.gov asks automated clients to use its API rather than its full-text pages, and this project respects that. U.S. federal government works are public domain (17 U.S.C. 105). Every topic query returned documents, and every curated document was returned by its topic's query (see [`data/corpus_queries.json`](data/corpus_queries.json)). Selection criteria are in [`corpus/topics.yaml`](corpus/topics.yaml).
 
 Topics overlap: a document can belong to more than one, so topic counts sum to more than 61.
+
+> **Note on physical activity.** Most physical activity documents are Federal Register **notices**, not binding rules: 7 of the 9 are notices (comment solicitations for the Physical Activity Guidelines, Youth Sports Strategy announcements, a charter renewal) and 2 are presidential documents (a proclamation and an executive order). None is a final or proposed rule. Federal physical activity policy mostly lives in guidelines and programs rather than regulations, so most of these documents code as `not_applicable` or `voluntary` for `legal_force` (the executive order, which binds agencies but not the public, is an open gold-standard TODO). The binding rules in this corpus come from the nutrition topics, plus one final and one proposed rule under active transportation.
 
 | Topic | Docs |
 |---|---:|
