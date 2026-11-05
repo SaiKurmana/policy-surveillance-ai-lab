@@ -1,0 +1,7 @@
+# Time-saved estimate inputs. Leave null until MEASURED - never fill with guesses.
+# manual_minutes_per_document: median minutes for a trained coder to code one
+#   gold document from scratch (time it while building the human gold standard).
+# review_minutes_per_document: median minutes to review the AI codes for one
+#   document in the app (the app logs seconds_spent per review decision).
+manual_minutes_per_document: null
+review_minutes_per_document: null

@@ -1,0 +1,113 @@
+# Retrieval evaluation: question -> relevant passage(s).
+#
+# STATUS: draft_unverified. Questions were written by the AI coding assistant
+# that scaffolded this repo; relevance is defined mechanically below so it can
+# be audited. A human should review each pair (is the question realistic? are
+# the relevant chunks really the ones an analyst needs?) and set status to
+# "verified".
+#
+# Relevance rule: a chunk is relevant if it belongs to one of `docs` and
+# contains every phrase in `must_contain` (case/whitespace-insensitive).
+# Questions are paraphrased on purpose so exact-match lookup is not enough.
+status: draft_unverified
+pairs:
+  - id: r01
+    question: How many grams of added sugars can a breakfast cereal have in school meals under the 2024 final rule?
+    docs: [2024-08098]
+    must_contain: ["6 grams of added sugars per dry ounce"]
+  - id: r02
+    question: What added sugars cap applies to yogurt served in child nutrition programs?
+    docs: [2024-08098]
+    must_contain: ["12 grams of added sugars per 6 ounces"]
+  - id: r03
+    question: Starting which school year must lunches and breakfasts keep added sugars under 10 percent of weekly calories?
+    docs: [2024-30710, 2024-08098]
+    must_contain: ["less than 10 percent of calories", "2027"]
+  - id: r04
+    question: Which restaurant chains are covered by federal menu calorie labeling?
+    docs: [2014-27833]
+    must_contain: ["20 or more locations"]
+  - id: r05
+    question: What statement about daily calorie needs must appear on menus?
+    docs: [2014-27833]
+    must_contain: ["2,000 calories a day is used for general nutrition advice"]
+  - id: r06
+    question: When is the effective date for calorie labeling of food in vending machines?
+    docs: [2014-27834]
+    must_contain: ["December 1, 2016"]
+  - id: r07
+    question: By when do manufacturers have to comply with the new definition of the healthy claim?
+    docs: [2024-29957]
+    must_contain: ["February 25, 2028"]
+  - id: r08
+    question: What would the proposed front-of-package nutrition box show consumers?
+    docs: [2025-00778]
+    must_contain: ["Nutrition Info box", "saturated fat"]
+  - id: r09
+    question: How does the WIC final rule change the fruit and vegetable benefit amount?
+    docs: [2024-07437]
+    must_contain: ["cash-value benefit"]
+  - id: r10
+    question: Why was the vitamin D requirement for WIC yogurts delayed?
+    docs: [2026-12700]
+    must_contain: ["vitamin D", "yogurt"]
+  - id: r11
+    question: Which beverage did Ohio ask to remove from SNAP-eligible purchases?
+    docs: [2026-18897]
+    must_contain: ["sugar- sweetened beverages"]
+  - id: r12
+    question: What is the application deadline for the Active Transportation Infrastructure Investment Program?
+    docs: [2024-08758]
+    must_contain: ["June 17, 2024"]
+  - id: r13
+    question: Does the REACH health equity award include prize money?
+    docs: [2024-08899]
+    must_contain: ["No cash prize will be awarded"]
+  - id: r14
+    question: What new guidance is being added to the Physical Activity Guidelines in 2027?
+    docs: [2026-20833]
+    must_contain: ["step count and muscle-strengthening"]
+  - id: r15
+    question: How often must school districts assess compliance with their local wellness policy?
+    docs: [2016-17230]
+    must_contain: ["triennial"]
+  - id: r16
+    question: Can schools now serve whole milk to children over age two?
+    docs: [2026-09212]
+    must_contain: ["whole and reduced-fat milk"]
+  - id: r17
+    question: What flavored milk option did the transitional standards allow for K-12 students?
+    docs: [2022-02327]
+    must_contain: ["flavored, low-fat milk (1 percent fat)"]
+  - id: r18
+    question: How can schools give preference to locally grown foods when buying for child nutrition programs?
+    docs: [2026-18337]
+    must_contain: ["geographic preference"]
+  - id: r19
+    question: What are the voluntary Phase II sodium reduction goals for processed foods?
+    docs: [2024-18261, 2024-25567]
+    must_contain: ["Phase II"]
+  - id: r20
+    question: How did FDA propose to let manufacturers use potassium chloride and other salt replacers in standardized foods?
+    docs: [2023-06456, 2026-20848]
+    must_contain: ["salt substitutes"]
+  - id: r21
+    question: What information is FDA requesting about ultra-processed foods?
+    docs: [2025-14089]
+    must_contain: ["ultra-processed"]
+  - id: r22
+    question: When can the public give oral comments on the 2025 Dietary Guidelines Advisory Committee's scientific report?
+    docs: [2024-29100]
+    must_contain: ["oral comments"]
+  - id: r23
+    question: What does the National Park Service propose for e-bikes and bicycles on park trails?
+    docs: [2026-17902]
+    must_contain: ["bicycle"]
+  - id: r24
+    question: What federal funding program supports safety projects for people walking and biking under Safe Streets and Roads for All?
+    docs: [2023-07716]
+    must_contain: ["Safe Streets and Roads for All"]
+  - id: r25
+    question: What does the National Youth Sports Strategy champion program ask organizations to do?
+    docs: [2023-00378, 2020-12955]
+    must_contain: ["National Youth Sports Strategy"]

@@ -1,0 +1,96 @@
+# Grounded Q&A evaluation set.
+#
+# STATUS: draft_unverified (written by the AI coding assistant that scaffolded
+# this repo; a human should review and set status: verified).
+#
+# answerable: true  -> the selected docs contain the answer; `expect_terms` are
+#                      words/numbers a correct answer should contain (all of them).
+# answerable: false -> the selected docs do NOT contain the answer; the system
+#                      should abstain (insufficient_evidence = true).
+status: draft_unverified
+questions:
+  - id: q01
+    question: What added sugars limit applies to breakfast cereals in school meals?
+    docs: [2024-08098]
+    answerable: true
+    expect_terms: ["6 grams", "dry ounce"]
+  - id: q02
+    question: What is the added sugars limit for yogurt in school meals?
+    docs: [2024-08098]
+    answerable: true
+    expect_terms: ["12 grams", "6 ounces"]
+  - id: q03
+    question: Which restaurants must post calorie information on menus?
+    docs: [2014-27833]
+    answerable: true
+    expect_terms: ["20 or more locations"]
+  - id: q04
+    question: When does the vending machine calorie labeling rule take effect?
+    docs: [2014-27834]
+    answerable: true
+    expect_terms: ["December 1, 2016"]
+  - id: q05
+    question: What is the compliance date for the updated healthy nutrient content claim?
+    docs: [2024-29957]
+    answerable: true
+    expect_terms: ["February 25, 2028"]
+  - id: q06
+    question: What did the State of Ohio request in its SNAP demonstration project?
+    docs: [2026-18897]
+    answerable: true
+    expect_terms: ["sweetened beverages"]
+  - id: q07
+    question: When are applications due for the Active Transportation Infrastructure Investment Program?
+    docs: [2024-08758]
+    answerable: true
+    expect_terms: ["June 17, 2024"]
+  - id: q08
+    question: Is there a cash prize for the REACH Lark Award Challenge?
+    docs: [2024-08899]
+    answerable: true
+    expect_terms: ["No cash prize"]
+  - id: q09
+    question: How long is the implementation date for the WIC yogurt vitamin D requirement extended?
+    docs: [2026-12700]
+    answerable: true
+    expect_terms: ["36 months"]
+  - id: q10
+    question: What milk can schools offer under the Expanding Fluid Milk Options rule?
+    docs: [2026-09212]
+    answerable: true
+    expect_terms: ["whole", "reduced-fat"]
+  - id: q11
+    question: What new guidance does HHS plan to add to the Physical Activity Guidelines for Americans?
+    docs: [2026-20833]
+    answerable: true
+    expect_terms: ["step count", "muscle-strengthening"]
+  - id: q12
+    question: What flavored milk did the transitional standards allow for students in grades K through 12?
+    docs: [2022-02327]
+    answerable: true
+    expect_terms: ["low-fat", "1 percent"]
+  # ---- not answerable from the selected documents: should abstain ----------
+  - id: q13
+    question: What is the penalty in dollars for a restaurant that fails to post calories?
+    docs: [2014-27834]
+    answerable: false
+  - id: q14
+    question: How many students in Ohio receive SNAP benefits?
+    docs: [2024-08758]
+    answerable: false
+  - id: q15
+    question: What did the 2025 Dietary Guidelines ultimately recommend for alcohol intake?
+    docs: [2024-29100]
+    answerable: false
+  - id: q16
+    question: What is the maximum grant amount for the REACH Lark award winners?
+    docs: [2026-20833]
+    answerable: false
+  - id: q17
+    question: Which states adopted Safe Routes to School programs in 2025?
+    docs: [2026-09212]
+    answerable: false
+  - id: q18
+    question: What sodium limit does Canada set for packaged bread?
+    docs: [2024-25567]
+    answerable: false
