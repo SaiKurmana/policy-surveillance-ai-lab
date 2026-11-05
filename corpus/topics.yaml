@@ -1,0 +1,99 @@
+# Corpus definition for the Policy Surveillance AI Lab.
+#
+# How selection works (reproducible, auditable):
+#   1. Each topic has a Federal Register API discovery query (`query`). The corpus
+#      builder runs it and records the hit count in data/corpus_queries.json.
+#      A query that returns zero documents fails the build.
+#   2. Keyword search on the Federal Register is noisy (it returns Unified Agenda
+#      entries, unrelated paperwork notices, etc.), so a human curated the
+#      `documents` list from the query results by reading titles and abstracts.
+#   3. The builder verifies every curated document number against the API
+#      (/api/v1/documents/{number}.json) and records whether the topic query
+#      surfaced it (`found_by_query` in the manifest). Nothing is added by hand
+#      outside this file.
+#
+# Metadata comes from the Federal Register API. Full text comes from the GPO
+# GovInfo edition of the same document (govinfo.gov/content/pkg/FR-<date>/html/...),
+# because FederalRegister.gov limits automated access to its API and its
+# full-text pages ask automated clients to use the API instead.
+#
+# Inclusion criteria: U.S. federal documents (rules, proposed rules, notices,
+# presidential documents) about nutrition standards, food labeling, food
+# assistance nutrition, physical activity, active transportation, or obesity /
+# chronic disease prevention programs.
+# Exclusion criteria: Unified/Regulatory Agenda listings, routine OMB paperwork
+# notices, clinical drug guidance, project-specific environmental notices,
+# documents whose subject is outside the topic set.
+
+topics:
+  school_meals:
+    label: School meal nutrition standards
+    query: '"school lunch" | "school breakfast" | "child nutrition programs"'
+    types: [RULE, PRORULE, NOTICE]
+    documents: [2024-08098, 2023-02102, 2022-02327, 2018-26762, 2020-00926, 2026-09212, 2026-18337, 2020-25760, 2024-30710]
+
+  school_food_environment:
+    label: Competitive foods and school wellness policies
+    query: '"Smart Snacks" | "local school wellness" | "all foods sold in school"'
+    types: [RULE, PRORULE]
+    documents: [2016-17227, 2016-17230, 2014-04100]
+
+  child_care_nutrition:
+    label: Child care (CACFP) meal patterns
+    query: '"Child and Adult Care Food Program" "meal pattern"'
+    types: [RULE, PRORULE]
+    documents: [2016-09412, 2021-22072, 2022-01582]
+
+  wic_food_packages:
+    label: WIC food packages
+    query: '"WIC food packages"'
+    types: [RULE, PRORULE]
+    documents: [2024-07437, 2022-24705, 2026-12700, 2014-04105]
+
+  menu_vending_labeling:
+    label: Menu and vending calorie labeling
+    query: '"menu labeling" | "calorie labeling" | "vending machines"'
+    types: [RULE, PRORULE]
+    documents: [2014-27833, 2014-27834, 2019-23276, 2023-27450, 2018-09725]
+
+  package_labeling_claims:
+    label: Nutrition Facts, front-of-package, and "healthy" claims
+    query: '"Nutrition Facts" | "front-of-package" | "nutrient content claims"'
+    types: [RULE, PRORULE]
+    documents: [2025-00778, 2024-29957, 2022-20975, 2025-03118, 2016-11867, 2018-09476]
+
+  sodium_reformulation:
+    label: Sodium reduction and food reformulation
+    query: '"sodium reduction" | "salt substitutes" | "ultra-processed"'
+    types: [RULE, PRORULE, NOTICE]
+    documents: [2024-25567, 2024-18261, 2021-22453, 2026-20848, 2023-06456, 2025-14089]
+
+  snap_retail_incentives:
+    label: SNAP food environment, incentives, and nutrition education
+    query: '"Supplemental Nutrition Assistance Program" (demonstration | incentives | "SNAP-Ed")'
+    types: [NOTICE]
+    documents: [2026-18897, 2026-18881, 2024-07163, 2023-26962]
+
+  dietary_guidelines:
+    label: Dietary Guidelines for Americans process
+    query: '"Dietary Guidelines Advisory Committee" | "Dietary Guidelines for Americans"'
+    types: [NOTICE]
+    documents: [2024-29100, 2022-12865, 2025-00416]
+
+  physical_activity:
+    label: Physical activity guidelines and youth sports
+    query: '"Physical Activity Guidelines" | "youth sports" | "Sports, Fitness"'
+    types: [NOTICE, PRESDOCU]
+    documents: [2026-20833, 2023-03859, 2021-24359, 2018-04307, 2023-00378, 2020-12955, 2025-15011, 2024-09820, 2026-10411]
+
+  active_transportation:
+    label: Active transportation (walking and bicycling)
+    query: '"active transportation" | pedestrian | bicycle'
+    types: [RULE, PRORULE, NOTICE]
+    documents: [2024-08758, 2023-02285, 2023-07716, 2026-17902, 2023-27178]
+
+  chronic_disease_prevention:
+    label: Obesity and chronic disease prevention programs
+    query: 'obesity | "Racial and Ethnic Approaches to Community Health" | "Healthy People 2030"'
+    types: [NOTICE]
+    documents: [2024-08899, 2023-22160, 2026-12090, 2024-22519]

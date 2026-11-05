@@ -1,0 +1,40 @@
+[project]
+name = "policylab"
+version = "0.1.0"
+description = "Policy Surveillance AI Lab: grounded search, Q&A, and human-reviewed policy coding over public Federal Register documents."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Sai Kurmana" }]
+dependencies = [
+  "pydantic>=2.6",
+  "pyyaml>=6.0",
+  "requests>=2.31",
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "duckdb>=1.0",
+]
+
+[project.optional-dependencies]
+app = ["streamlit>=1.35"]
+llm = ["anthropic>=2.0"]
+ml = ["sentence-transformers>=3.0"]
+eval = ["matplotlib>=3.8"]
+site = ["markdown>=3.5"]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[tool.setuptools.packages.find]
+include = ["policylab*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = [".venv", "_site"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

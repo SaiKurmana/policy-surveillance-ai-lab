@@ -1,0 +1,4 @@
+# Optional: local embedding model for hybrid retrieval (CPU).
+# Install CPU-only torch first to keep the download small:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+sentence-transformers>=3.0
